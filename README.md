@@ -64,6 +64,7 @@ Example
 
 ```sh
 $ echo "Hello, {{who}}!" | nunjucks -D who=world -
+Hello, world!
 ```
 
 License
