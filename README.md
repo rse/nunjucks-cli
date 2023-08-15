@@ -18,8 +18,14 @@ an output file based on a template input file where your configuration can be ex
 Installation
 ------------
 
-```
+```sh
 $ npm install -g @rse/nunjucks-cli
+```
+
+Alternatively, instead of globally installing it, let it be automatically installed on-the-fly:
+
+```sh
+$ npx @rse/nunjucks-cli [...]
 ```
 
 Usage
