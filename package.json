@@ -18,6 +18,7 @@
         "yargs":                  "17.7.2",
         "moment":                 "2.29.4",
         "moment-timezone":        "0.5.43",
+        "jsonpath":               "1.1.1",
         "js-yaml":                "4.1.0"
     },
     "devDependencies": {
