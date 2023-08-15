@@ -1,5 +1,6 @@
 {
     "name":                       "@rse/nunjucks-cli",
+    "publishConfig":              { "access": "public" },
     "version":                    "0.9.5",
     "description":                "Nunjucks Template Rendering Command-Line Interface",
     "author": {
