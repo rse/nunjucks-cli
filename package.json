@@ -1,7 +1,7 @@
 {
     "name":                       "@rse/nunjucks-cli",
     "publishConfig":              { "access": "public" },
-    "version":                    "1.1.0",
+    "version":                    "1.1.1",
     "description":                "Nunjucks Template Rendering Command-Line Interface",
     "author": {
         "name":                   "Dr. Ralf S. Engelschall",
