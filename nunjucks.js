@@ -26,7 +26,7 @@ const argv = yargs
         "[-c|--config <config-file>] " +
         "[-d|--defines <context-file>] " +
         "[-D|--define <key>=<value>] " +
-        "[-e|--extension <extension-file>] " +
+        "[-e|--extension <module-name>] " +
         "[-o|--output <output-file>|-] " +
         "<input-file>|-")
     .version(false)
@@ -35,7 +35,7 @@ const argv = yargs
     .string("c").nargs("c", 1).alias("c", "config").describe("c", "load Nunjucks configuration YAML file")
     .string("d").nargs("d", 1).alias("d", "defines").describe("d", "load context definition YAML file")
     .string("D").nargs("D", 1).alias("D", "define").describe("D", "set context definition key/value")
-    .array("e").nargs("e", 1).alias("e", "extension").describe("e", "load Nunjucks JavaScript extension file")
+    .array("e").nargs("e", 1).alias("e", "extension").describe("e", "load Nunjucks JavaScript extension module")
     .string("o").nargs("o", 1).alias("o", "output").default("o", "-").describe("o", "save output file")
     .strict()
     .showHelpOnFail(true)
@@ -141,11 +141,18 @@ if (typeof argv.extension === "object" && argv.extension instanceof Array) {
     for (let extension of argv.extension) {
         if (extension.match(/^(?:default|date|eval)$/))
             extension = path.join(__dirname, "nunjucks.d", `${extension}.js`)
-        else if (!fs.existsSync(extension)) {
-            console.error(chalk.red(`nunjucks: ERROR: failed to find extension file: ${extension}`))
+        let path = null
+        try {
+            path = require.resolve(extension)
+        }
+        catch (ex) {
+            path = null
+        }
+        if (path === null) {
+            console.error(chalk.red(`nunjucks: ERROR: failed to find extension module: ${extension}`))
             process.exit(1)
         }
-        const ext = require(path.resolve(extension))
+        const ext = require(extension)
         if (!(ext !== null && typeof ext === "function")) {
             console.error(chalk.red(`nunjucks: ERROR: failed to call extension file: ${extension}`))
             process.exit(1)

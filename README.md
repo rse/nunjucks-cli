@@ -37,7 +37,7 @@ $ nunjucks
   [-c|--config <config-file>]
   [-d|--defines <context-file>]
   [-D|--define <key>=<value>]
-  [-e|--extension <extension-file>]
+  [-e|--extension <module-name>]
   [-o|--output <output-file>|-]
   <input-file>|-
 ```
@@ -52,8 +52,8 @@ $ nunjucks
   load context definition YAML file.
 - `-D`|`--define` `<key>=<value>`:<br/>
   set context definition key/value.
-- `-e`|`--extension` `default|date|eval|<extension-file>`:<br/>
-  load Nunjucks JavaScript extension (built-in or from file).
+- `-e`|`--extension` `default|date|eval|<module-name>`:<br/>
+  load Nunjucks JavaScript extension module (built-in or NPM installed).
 - `-o`|`--output` `<output-file>`|`-`:<br/>
   save output file (or stdout).
 - `<input-file>`|`-`:<br/>
