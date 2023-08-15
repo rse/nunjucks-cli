@@ -139,7 +139,7 @@ const env = nunjucks.configure(inputFile, options)
 /*  load external extension files  */
 if (typeof argv.extension === "object" && argv.extension instanceof Array) {
     for (let extension of argv.extension) {
-        if (fs.existsSync(path.join(__dirname, "nunjucks.d", `${extension}.js`)))
+        if (extension.match(/^(?:default|date|eval)$/))
             extension = path.join(__dirname, "nunjucks.d", `${extension}.js`)
         else if (!fs.existsSync(extension)) {
             console.error(chalk.red(`nunjucks: ERROR: failed to find extension file: ${extension}`))
