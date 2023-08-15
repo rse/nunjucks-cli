@@ -22,7 +22,7 @@ Installation
 ------------
 
 ```
-$ npm install -g nunjucks-cli
+$ npm install -g @rse/nunjucks-cli
 ```
 
 Usage

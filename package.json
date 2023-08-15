@@ -1,5 +1,5 @@
 {
-    "name":                       "nunjucks-cli",
+    "name":                       "@rse/nunjucks-cli",
     "version":                    "0.9.5",
     "description":                "Nunjucks Template Rendering Command-Line Interface",
     "author": {
