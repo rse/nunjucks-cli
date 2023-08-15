@@ -90,7 +90,7 @@ else {
 let context = {}
 if (argv.defines) {
     try {
-        context = jsYAML.safeLoad(fs.readFileSync(argv.defines, { encoding: "utf8" }))
+        context = jsYAML.load(fs.readFileSync(argv.defines, { encoding: "utf8" }))
     }
     catch (ex) {
         console.error(chalk.red(`nunjucks: ERROR: failed to load context YAML file: ${ex.toString()}`))
@@ -117,7 +117,7 @@ if (argv.define) {
 let options = {}
 if (argv.config) {
     try {
-        options = jsYAML.safeLoad(fs.readFileSync(argv.config, { encoding: "utf8" }))
+        options = jsYAML.load(fs.readFileSync(argv.config, { encoding: "utf8" }))
     }
     catch (ex) {
         console.error(chalk.red(`nunjucks: ERROR: failed to load options YAML file: ${ex.toString()}`))
@@ -139,25 +139,25 @@ const env = nunjucks.configure(inputFile, options)
 /*  load external extension files  */
 if (typeof argv.extension === "object" && argv.extension instanceof Array) {
     for (let extension of argv.extension) {
-        if (extension.match(/^(?:default|date|eval)$/))
+        if (extension.match(/^(?:default|date|eval|jsonpath)$/))
             extension = path.join(__dirname, "nunjucks.d", `${extension}.js`)
-        let path = null
+        let modpath = null
         try {
-            path = require.resolve(extension)
+            modpath = require.resolve(extension)
         }
         catch (ex) {
-            path = null
+            modpath = null
         }
-        if (path === null) {
+        if (modpath === null) {
             console.error(chalk.red(`nunjucks: ERROR: failed to find extension module: ${extension}`))
             process.exit(1)
         }
-        const ext = require(extension)
-        if (!(ext !== null && typeof ext === "function")) {
-            console.error(chalk.red(`nunjucks: ERROR: failed to call extension file: ${extension}`))
+        const mod = require(modpath)
+        if (!(mod !== null && typeof mod === "function")) {
+            console.error(chalk.red(`nunjucks: ERROR: failed to call extension file: ${modpath}`))
             process.exit(1)
         }
-        ext(env)
+        mod(env)
     }
 }
 
