@@ -15,6 +15,8 @@ Abstract
 
 This is a small command-line utility to render templates with the rich
 and powerful templating language [Mozilla Nunjucks](https://mozilla.github.io/nunjucks/).
+This allows you to define your configuration in a YAML file and then render
+an output file based on a template input file where your configuration can be expanded.
 
 Installation
 ------------
@@ -51,7 +53,7 @@ $ nunjucks
   load Nunjucks JavaScript extension file.
 - `-o`|`--output` `<output-file>`|`-`:<br/>
   save output file (or stdout).
-- `<input-file>`|`-`:
+- `<input-file>`|`-`:<br/>
   load input file (or stdin).
 
 Example
