@@ -5,10 +5,10 @@ nunjucks-cli
 **Nunjucks Template Rendering Command-Line Interface**
 
 <p/>
-<img src="https://nodei.co/npm/nunjucks-cli.png?downloads=true&stars=true" alt=""/>
+<img src="https://nodei.co/npm/@rse/nunjucks-cli.png?downloads=true&stars=true" alt=""/>
 
 <p/>
-<img src="https://david-dm.org/rse/nunjucks-cli.png" alt=""/>
+<img src="https://david-dm.org/rse/@rse/nunjucks-cli.png" alt=""/>
 
 Abstract
 --------
