@@ -52,7 +52,7 @@ $ nunjucks
   load context definition YAML file.
 - `-D`|`--define` `<key>=<value>`:<br/>
   set context definition key/value.
-- `-e`|`--extension` `default|date|eval|jsonpath|<module-name>`:<br/>
+- `-e`|`--extension` `default|date|eval|jsonpath|pad|<module-name>`:<br/>
   load Nunjucks JavaScript extension module (built-in or NPM installed).
 - `-o`|`--output` `<output-file>`|`-`:<br/>
   save output file (or stdout).
