@@ -11,5 +11,11 @@ module.exports = (env) => {
     env.addFilter("sprintf", (value, format, ...args) => {
         return sprintf(format, value, ...args)
     })
+
+    /*  add a "sprintf" global function  */
+    env.addGlobal("sprintf", (format, ...args) => {
+        console.log(format, args)
+        return sprintf(format, ...args)
+    })
 }
 
