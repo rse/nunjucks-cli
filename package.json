@@ -20,6 +20,7 @@
         "moment-timezone":        "0.5.43",
         "jsonpath":               "1.1.1",
         "sprintfjs":              "1.2.17",
+        "pure-uuid":              "1.7.0",
         "js-yaml":                "4.1.0"
     },
     "devDependencies": {
