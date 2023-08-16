@@ -139,7 +139,7 @@ const env = nunjucks.configure(inputFile, options)
 /*  load external extension files  */
 if (typeof argv.extension === "object" && argv.extension instanceof Array) {
     for (let extension of argv.extension) {
-        if (extension.match(/^(?:default|date|eval|jsonpath|pad)$/))
+        if (extension.match(/^(?:default|date|eval|jsonpath|pad|sprintf)$/))
             extension = path.join(__dirname, "nunjucks.d", `${extension}.js`)
         let modpath = null
         try {
