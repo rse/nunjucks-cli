@@ -23,11 +23,6 @@
         "nunjucks":               "3.2.4",
         "chalk":                  "4.1.0",
         "yargs":                  "17.7.2",
-        "moment":                 "2.29.4",
-        "moment-timezone":        "0.5.43",
-        "jsonpath":               "1.1.1",
-        "sprintfjs":              "1.2.17",
-        "pure-uuid":              "1.7.0",
         "js-yaml":                "4.1.0"
     },
     "devDependencies": {

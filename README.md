@@ -19,13 +19,13 @@ Installation
 ------------
 
 ```sh
-$ npm install -g @rse/nunjucks-cli
+$ npm install -g @rse/nunjucks-cli [@rse/nunjucks-addons]
 ```
 
 Alternatively, instead of globally installing it, let it be automatically installed on-the-fly:
 
 ```sh
-$ npx @rse/nunjucks-cli [...]
+$ npx @rse/nunjucks-cli [-e @rse/nunjucks-addons] [...]
 ```
 
 Usage
@@ -52,8 +52,8 @@ $ nunjucks
   load context definition YAML file.
 - `-D`|`--define` `<key>=<value>`:<br/>
   set context definition key/value.
-- `-e`|`--extension` `default|date|eval|jsonpath|pad|sprintf|uuid|<module-name>`:<br/>
-  load Nunjucks JavaScript extension module (built-in or NPM installed).
+- `-e`|`--extension` `<module-name>`:<br/>
+  load Nunjucks JavaScript extension module (installed via NPM).
 - `-o`|`--output` `<output-file>`|`-`:<br/>
   save output file (or stdout).
 - `<input-file>`|`-`:<br/>
