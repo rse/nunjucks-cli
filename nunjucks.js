@@ -139,12 +139,14 @@ const env = nunjucks.configure(inputFile, options)
 /*  load external extension files  */
 if (typeof argv.extension === "object" && argv.extension instanceof Array) {
     for (let extension of argv.extension) {
-        let modpath = null
-        try {
-            modpath = require.resolve(extension)
-        }
-        catch (ex) {
-            modpath = null
+        let modpath = path.resolve(extension)
+        if (!fs.existsSync(modpath)) {
+            try {
+                modpath = require.resolve(extension)
+            }
+            catch (ex) {
+                modpath = null
+            }
         }
         if (modpath === null) {
             console.error(chalk.red(`nunjucks: ERROR: failed to find extension module: ${extension}`))
