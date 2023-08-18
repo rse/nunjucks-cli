@@ -9,6 +9,13 @@
         "url":                    "http://engelschall.com"
     },
     "license":                    "MIT",
+    "repository": {
+        "type": "git",
+        "url":  "git://github.com/rse/nunjucks-cli.git"
+    },
+    "bugs": {
+        "url":  "http://github.com/rse/nunjucks-cli/issues"
+    },
     "bin": {
         "nunjucks":               "nunjucks.js"
     },
