@@ -14,22 +14,35 @@ This is a small command-line utility to render templates with the rich
 and powerful templating language [Mozilla Nunjucks](https://mozilla.github.io/nunjucks/).
 This allows you to define your configuration in a YAML file and then render
 an output file based on a template input file where your configuration can be expanded.
+It optionally can load Nunjucks addons like the ones from the companion
+[Nunjucks Addons](https://github.com/rse/nunjucks-addons) package.
 
-Installation
-------------
-
-```sh
-$ npm install -g @rse/nunjucks-cli [@rse/nunjucks-addons]
-```
-
-Alternatively, instead of globally installing it, let it be automatically installed on-the-fly:
+Installation & Usage
+--------------------
 
 ```sh
-$ npx @rse/nunjucks-cli [-e @rse/nunjucks-addons] [...]
+# plain functionality
+$ npm install -g @rse/nunjucks-cli
+$ nunjucks [...]
+
+# with addon functionality
+$ npm install -g @rse/nunjucks-cli @rse/nunjucks-addons
+$ nunjucks -e @rse/nunjucks-addons [...]
 ```
 
-Usage
------
+Alternatively, instead of globally installing it, you can also use it on-the-fly:
+
+```sh
+# plain functionality
+$ npx --yes @rse/nunjucks-cli [...]
+
+# with addon functionality
+$ npx --yes --package @rse/nunjucks-cli --package @rse/nunjucks-addons -- \
+  nunjucks -e @rse/nunjucks-addons [...]
+```
+
+Options
+-------
 
 ```
 $ nunjucks
