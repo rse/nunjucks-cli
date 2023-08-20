@@ -48,6 +48,7 @@ Options
 $ nunjucks
   [-h|--help] [-V|--version]
   [-c|--config <config-file>]
+  [-C|--option <key>=<value>]
   [-d|--defines <context-file>]
   [-D|--define <key>=<value>]
   [-e|--extension <module-name>]
@@ -60,7 +61,9 @@ $ nunjucks
 - `-V`|`--version`:<br/>
   show program version information.
 - `-c`|`--config` `<config-file>`:<br/>
-  load Nunjucks configuration YAML file
+  load Nunjucks configuration YAML file.
+- `-C`|`--option` `<key>=<value>`:<br/>
+  set Nunjucks configuration option.
 - `-d`|`--defines` `<context-file>`:<br/>
   load context definition YAML file.
 - `-D`|`--define` `<key>=<value>`:<br/>

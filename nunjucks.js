@@ -24,6 +24,7 @@ const argv = yargs
         "[-h|--help] " +
         "[-V|--version] " +
         "[-c|--config <config-file>] " +
+        "[-C|--option <key>=<value>] " +
         "[-d|--defines <context-file>] " +
         "[-D|--define <key>=<value>] " +
         "[-e|--extension <module-name>] " +
@@ -33,8 +34,9 @@ const argv = yargs
     .help("h").alias("h", "help").default("h", false).describe("h", "show usage help")
     .boolean("V").alias("V", "version").describe("V", "show program version information")
     .string("c").nargs("c", 1).alias("c", "config").describe("c", "load Nunjucks configuration YAML file")
+    .array("C").nargs("C", 1).alias("C", "option").describe("C", "set Nunjucks configuration option")
     .string("d").nargs("d", 1).alias("d", "defines").describe("d", "load context definition YAML file")
-    .string("D").nargs("D", 1).alias("D", "define").describe("D", "set context definition key/value")
+    .array("D").nargs("D", 1).alias("D", "define").describe("D", "set context definition key/value")
     .array("e").nargs("e", 1).alias("e", "extension").describe("e", "load Nunjucks JavaScript extension module")
     .string("o").nargs("o", 1).alias("o", "output").default("o", "-").describe("o", "save output file")
     .strict()
@@ -108,8 +110,6 @@ context.env = process.env
 
 /*  add context defines  */
 if (argv.define) {
-    if (typeof argv.define === "string")
-        argv.define = [ argv.define ]
     argv.define.forEach((define) => {
         let [ , key, val ] = define.match(/^([^=]+)(?:=(.*))?$/)
         if (val === undefined)
@@ -129,8 +129,12 @@ if (argv.config) {
         process.exit(1)
     }
 }
+if (argv.options) {
+    console.log(argv.options)
+    options = Object.assign(options, argv.options)
+}
 options = Object.assign({}, {
-    autoescape:       true,
+    autoescape:       false,
     throwOnUndefined: false,
     trimBlocks:       true,
     lstripBlocks:     true,
