@@ -40,6 +40,11 @@ const argv = yargs
     .strict()
     .showHelpOnFail(true)
     .demand(0)
+    .parserConfiguration({
+        "short-option-groups": true,
+        "parse-numbers":       true,
+        "boolean-negation":    true
+    })
     .parse(process.argv.slice(2))
 
 /*  handle special version request  */
