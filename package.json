@@ -22,7 +22,7 @@
     "dependencies": {
         "nunjucks":               "3.2.4",
         "chalk":                  "4.1.0",
-        "yargs":                  "17.7.2",
+        "commander":              "11.0.0",
         "js-yaml":                "4.1.0"
     },
     "devDependencies": {
