@@ -46,7 +46,8 @@ Options
 
 ```
 $ nunjucks
-  [-h|--help] [-V|--version]
+  [-h|--help]
+  [-V|--version]
   [-c|--config <config-file>]
   [-C|--option <key>=<value>]
   [-d|--defines <context-file>]
