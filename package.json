@@ -10,11 +10,11 @@
     },
     "license":                    "MIT",
     "repository": {
-        "type": "git",
-        "url":  "git://github.com/rse/nunjucks-cli.git"
+        "type":                   "git",
+        "url":                    "git://github.com/rse/nunjucks-cli.git"
     },
     "bugs": {
-        "url":  "http://github.com/rse/nunjucks-cli/issues"
+        "url":                    "http://github.com/rse/nunjucks-cli/issues"
     },
     "bin": {
         "nunjucks":               "nunjucks.js"
@@ -26,15 +26,19 @@
         "js-yaml":                "4.1.0"
     },
     "devDependencies": {
-        "eslint":                 "8.47.0",
+        "eslint":                 "8.48.0",
         "eslint-config-standard": "17.1.0",
         "eslint-plugin-promise":  "6.1.1",
         "eslint-plugin-import":   "2.28.1",
-        "eslint-plugin-node":     "11.1.0"
+        "eslint-plugin-node":     "11.1.0",
+        "remark-cli":             "11.0.0",
+        "remark":                 "14.0.3",
+        "remark-man":             "8.0.1"
     },
     "upd":                        [ "!chalk" ],
     "scripts": {
         "lint":                   "eslint --config eslint.yaml nunjucks.js",
+        "man":                    "remark --quiet --use remark-man --output nunjucks.1 nunjucks.md",
         "test":                   "echo 'Hello, {{who}}!' | node nunjucks.js -D who=world -"
     }
 }

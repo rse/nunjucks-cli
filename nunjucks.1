@@ -1,0 +1,47 @@
+.TH "NUNJUCKS" "1" "August 2023" "" ""
+.SH "NAME"
+\fBnunjucks\fR - Template Rendering Engine
+.SH "SYNOPSIS"
+.P
+\fBnunjucks\fR \[lB]\fB-h\fR|\fB--help\fR\[rB] \[lB]\fB-V\fR|\fB--version\fR\[rB] \[lB]\fB-c\fR|\fB--config\fR \fIconfig-file\fR\[rB] \[lB]\fB-C\fR|\fB--option\fR \fIkey\fR=\fIvalue\fR\[rB] \[lB]\fB-d\fR|\fB--defines\fR \fIcontext-file\fR\[rB] \[lB]\fB-D\fR|\fB--define\fR \fIkey\fR=\fIvalue\fR\[rB] \[lB]\fB-e\fR|\fB--extension\fR \fImodule-name\fR\[rB] \[lB]\fB-o\fR|\fB--output\fR \fIoutput-file\fR|\fB-\fR\[rB] \[lB]\fIinput-file\fR|\fB-\fR\[rB]
+.SH "DESCRIPTION"
+.P
+\fBnunjucks\fR(1) is a small command-line utility to render templates with the rich and powerful templating language \fBMozilla Nunjucks\fR \fI\(lahttps://mozilla.github.io/nunjucks/\(ra\fR. This allows you to define your configuration in a YAML file and then render an output file based on a template input file where your configuration can be expanded. It optionally can load Nunjucks addons like the ones from the companion \fBNunjucks Addons\fR \fI\(lahttps://github.com/rse/nunjucks-addons\(ra\fR package.
+.SH "OPTIONS"
+.P
+The following top-level options and arguments exist:
+.RS 0
+.IP \(bu 4
+\[lB]\fB-h\fR|\fB--help\fR\[rB] Show usage help.
+.IP \(bu 4
+\[lB]\fB-V\fR|\fB--version\fR\[rB] show program version information.
+.IP \(bu 4
+\[lB]\fB-c\fR|\fB--config\fR \fIconfig-file\fR\[rB] load Nunjucks configuration YAML file.
+.IP \(bu 4
+\[lB]\fB-C\fR|\fB--option\fR \fIkey\fR=\fIvalue\fR\[rB] set Nunjucks configuration option.
+.IP \(bu 4
+\[lB]\fB-d\fR|\fB--defines\fR \fIcontext-file\fR\[rB] load context definition YAML file.
+.IP \(bu 4
+\[lB]\fB-D\fR|\fB--define\fR \fIkey\fR=\fIvalue\fR\[rB] set context definition key/value.
+.IP \(bu 4
+\[lB]\fB-e\fR|\fB--extension\fR \fImodule-name\fR\[rB] load Nunjucks JavaScript extension module (installed via NPM).
+.IP \(bu 4
+\[lB]\fB-o\fR|\fB--output\fR \fIoutput-file\fR|\fB-\fR\[rB] save output file (or stdout).
+.IP \(bu 4
+\[lB]\fB<input-file>\fR|\fB-\fR\[rB] load input file (or stdin).
+.RE 0
+
+.SH "EXAMPLE"
+.P
+.RS 2
+.nf
+$ echo "Hello, {{who}}!" | nunjucks -D who=world -
+Hello, world!
+.fi
+.RE
+.SH "HISTORY"
+.P
+The \fBnunjucks\fR(1) utility was developed in August 2023 for being able to easily generate multiple configuration files for a complex \fIDocker-Compose\fR based setup.
+.SH "AUTHOR"
+.P
+Dr. Ralf S. Engelschall \fI\(larse@engelschall.com\(ra\fR
