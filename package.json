@@ -1,7 +1,7 @@
 {
     "name":                       "@rse/nunjucks-cli",
     "publishConfig":              { "access": "public" },
-    "version":                    "1.4.2",
+    "version":                    "1.4.3",
     "stdver":                     "1.4.2.20230826-GA",
     "description":                "Nunjucks Template Rendering Command-Line Interface",
     "author": {
