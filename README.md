@@ -5,10 +5,11 @@ nunjucks-cli
 **Nunjucks Template Rendering Command-Line Interface**
 
 [![github (author stars)](https://img.shields.io/github/stars/rse?logo=github&label=author%20stars&color=%233377aa)](https://github.com/rse)
-[![gitHub (author followers)](https://img.shields.io/github/followers/rse?label=github%20followers&logo=github&color=%234477aa)](https://github.com/rse)
-[![gitHub (project stdver)](https://img.shields.io/github/package-json/stdver/rse/nunjucks-cli?logo=github&label=stdver&color=%234477aa)](https://github.com/rse/nunjucks-cli)
-[![npm (project release)](https://img.shields.io/npm/v/%40rse/nunjucks-cli?logo=npm&label=release&color=%23cc3333)](https://npmjs.com/@rse/nunjucks-cli)
-[![npm (project downloads)](https://img.shields.io/npm/dm/%40rse/nunjucks-cli?logo=npm&label=downloads&color=%23cc3333)](https://npmjs.com/@rse/nunjucks-cli)
+[![github (author followers)](https://img.shields.io/github/followers/rse?label=author%20followers&logo=github&color=%234477aa)](https://github.com/rse)
+[![github (project stdver)](https://img.shields.io/github/package-json/stdver/rse/nunjucks-cli?logo=github&label=stdver&color=%234477aa)](https://github.com/rse/nunjucks-cli)
+<br/>
+[![npm (project release)](https://img.shields.io/npm/v/%40rse/nunjucks-cli?logo=npm&label=npm%20release&color=%23cc3333)](https://npmjs.com/@rse/nunjucks-cli)
+[![npm (project downloads)](https://img.shields.io/npm/dm/%40rse/nunjucks-cli?logo=npm&label=npm%20downloads&color=%23cc3333)](https://npmjs.com/@rse/nunjucks-cli)
 
 Abstract
 --------
