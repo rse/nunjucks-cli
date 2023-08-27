@@ -4,8 +4,9 @@ nunjucks-cli
 
 **Nunjucks Template Rendering Command-Line Interface**
 
-![npm (re)](https://img.shields.io/npm/v/%40rse/nunjucks-cli?logo=npm&label=release&color=%23cc3333)
-![npm (dl)](https://img.shields.io/npm/dm/%40rse/nunjucks-cli?logo=npm&label=downloads&color=%23cc3333)
+![github (author stars)](https://img.shields.io/github/stars/rse?logo=github&label=author%20stars&color=%233377aa)
+![npm (release)](https://img.shields.io/npm/v/%40rse/nunjucks-cli?logo=npm&label=release&color=%23cc3333)
+![npm (downloads)](https://img.shields.io/npm/dm/%40rse/nunjucks-cli?logo=npm&label=downloads&color=%23cc3333)
 
 Abstract
 --------
