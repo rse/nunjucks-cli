@@ -4,8 +4,8 @@ nunjucks-cli
 
 **Nunjucks Template Rendering Command-Line Interface**
 
-<p/>
 ![npm (re)](https://img.shields.io/npm/v/%40rse/nunjucks-cli)
+
 ![npm (dl)](https://img.shields.io/npm/dt/%40rse/nunjucks-cli?logo=npm&label=downloads&color=%23cc3333)
 
 Abstract
