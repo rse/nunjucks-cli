@@ -24,6 +24,8 @@ It optionally can load Nunjucks addons like the ones from the companion
 Installation & Usage
 --------------------
 
+For the installation via Node Package Manager (NPM) use:
+
 ```sh
 # plain functionality
 $ npm install -g @rse/nunjucks-cli
@@ -34,7 +36,7 @@ $ npm install -g @rse/nunjucks-cli @rse/nunjucks-addons
 $ nunjucks -e @rse/nunjucks-addons [...]
 ```
 
-Alternatively, instead of globally installing it, you can also use it on-the-fly:
+Alternatively, instead of globally installing it, you can also use it on-the-fly with NPM's npx(1) utility:
 
 ```sh
 # plain functionality
@@ -45,8 +47,10 @@ $ npx --yes --package @rse/nunjucks-cli --package @rse/nunjucks-addons -- \
   nunjucks -e @rse/nunjucks-addons [...]
 ```
 
-Options
--------
+Command-Line Interface (CLI)
+----------------------------
+
+Short excerpt of the CLI options and arguments from the companion [Unix manpage](nunjucks.md):
 
 ```
 $ nunjucks
