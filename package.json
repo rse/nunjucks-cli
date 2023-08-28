@@ -12,7 +12,7 @@
     "license":                    "MIT",
     "repository": {
         "type":                   "git",
-        "url":                    "git://github.com/rse/nunjucks-cli.git"
+        "url":                    "https://github.com/rse/nunjucks-cli.git"
     },
     "bugs": {
         "url":                    "http://github.com/rse/nunjucks-cli/issues"
@@ -20,6 +20,7 @@
     "bin": {
         "nunjucks":               "nunjucks.js"
     },
+    "man":                        "nunjucks.1",
     "dependencies": {
         "nunjucks":               "3.2.4",
         "chalk":                  "4.1.0",
