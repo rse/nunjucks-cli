@@ -12,7 +12,7 @@
     "license":                    "MIT",
     "repository": {
         "type":                   "git",
-        "url":                    "https://github.com/rse/nunjucks-cli.git"
+        "url":                    "git+https://github.com/rse/nunjucks-cli.git"
     },
     "bugs": {
         "url":                    "http://github.com/rse/nunjucks-cli/issues"
