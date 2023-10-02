@@ -67,23 +67,25 @@ $ nunjucks
 ```
 
 - `-h`|`--help`:<br/>
-  show usage help.
+  Show usage help.
 - `-V`|`--version`:<br/>
-  show program version information.
+  Show program version information.
 - `-c`|`--config` `<config-file>`:<br/>
-  load Nunjucks configuration YAML file.
+  Load Nunjucks configuration YAML file.
 - `-C`|`--option` `<key>=<value>`:<br/>
-  set Nunjucks configuration option.
+  Set Nunjucks configuration option.
 - `-d`|`--defines` `<context-file>`:<br/>
-  load context definition YAML file.
+  Load context definition YAML file.
+  Can occur multiple times.
 - `-D`|`--define` `<key>=<value>`:<br/>
-  set context definition key/value.
+  Set context definition key/value.
+  Can occur multiple times.
 - `-e`|`--extension` `<module-name>`:<br/>
-  load Nunjucks JavaScript extension module (installed via NPM).
+  Load Nunjucks JavaScript extension module (installed via NPM).
 - `-o`|`--output` `<output-file>`|`-`:<br/>
-  save output file (or stdout).
+  Save output file (or stdout).
 - `<input-file>`|`-`:<br/>
-  load input file (or stdin).
+  Load input file (or stdin).
 
 Example
 -------

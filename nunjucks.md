@@ -31,28 +31,30 @@ The following top-level options and arguments exist:
   Show usage help.
 
 - \[`-V`|`--version`\]
-  show program version information.
+  Show program version information.
 
 - \[`-c`|`--config` *config-file*\]
-  load Nunjucks configuration YAML file.
+  Load Nunjucks configuration YAML file.
 
 - \[`-C`|`--option` *key*=*value*\]
-  set Nunjucks configuration option.
+  Set Nunjucks configuration option.
 
 - \[`-d`|`--defines` *context-file*\]
-  load context definition YAML file.
+  Load context definition YAML file.
+  Can occur multiple times.
 
 - \[`-D`|`--define` *key*=*value*\]
-  set context definition key/value.
+  Set context definition key/value.
+  Can occur multiple times.
 
 - \[`-e`|`--extension` *module-name*\]
-  load Nunjucks JavaScript extension module (installed via NPM).
+  Load Nunjucks JavaScript extension module (installed via NPM).
 
 - \[`-o`|`--output` *output-file*|`-`\]
-  save output file (or stdout).
+  Save output file (or stdout).
 
 - \[`<input-file>`|`-`\]
-  load input file (or stdin).
+  Load input file (or stdin).
 
 ## EXAMPLE
 

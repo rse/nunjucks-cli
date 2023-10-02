@@ -17,6 +17,7 @@ const commander = require("commander")
 const chalk     = require("chalk")
 const jsYAML    = require("js-yaml")
 const nunjucks  = require("nunjucks")
+const deepmerge = require("deepmerge")
 
 /*  parse command-line arguments  */
 const program = new commander.Command()
@@ -27,7 +28,7 @@ program.name("nunjucks")
     .option("-V, --version", "show program version information", false)
     .option("-c, --config <config-file>", "load Nunjucks configuration YAML file", "")
     .option("-C, --option <key>=<value>", "set Nunjucks configuration option", (v, l) => l.concat([ v ]), [])
-    .option("-d, --defines <context-file>", "load context definition YAML file", "")
+    .option("-d, --defines <context-file>", "load context definition YAML file", (v, l) => l.concat([ v ]), [])
     .option("-D, --define <key>=<value>", "set context definition key/value", (v, l) => l.concat([ v ]), [])
     .option("-e, --extension <module-name>", "load Nunjucks JavaScript extension module", (v, l) => l.concat([ v ]), [])
     .option("-o, --output <output-file>", "save output file", "-")
@@ -88,9 +89,9 @@ else {
 
 /*  provide context variables for template  */
 let context = {}
-if (argv.defines) {
+for (const define of argv.defines) {
     try {
-        context = jsYAML.load(fs.readFileSync(argv.defines, { encoding: "utf8" }))
+        context = deepmerge(context, jsYAML.load(fs.readFileSync(define, { encoding: "utf8" })))
     }
     catch (ex) {
         console.error(chalk.red(`nunjucks: ERROR: failed to load context YAML file: ${ex.toString()}`))
