@@ -20,7 +20,7 @@ IMAGE_CONFIG = \
 
 #   ==== BUILD ====
 #   (re)build a container image
-DOCKER_BUILD_FLAGS ?= --progress=plain --pull --no-cache
+DOCKER_BUILD_FLAGS ?= --pull --no-cache
 build: Dockerfile
 	@$(IMAGE_CONFIG) && \
 	echo "++ building Docker image $${IMAGE_PREFIX}$${IMAGE_NAME}:$${IMAGE_VERSION}-$${IMAGE_RELEASE} ($${IMAGE_ALIAS})" && \
