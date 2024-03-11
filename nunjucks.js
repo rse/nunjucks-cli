@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /*
 **  nunjucks -- Nunjucks Template Rendering Command-Line Interface
-**  Copyright (c) 2019-2023 Dr. Ralf S. Engelschall <http://engelschall.com>
+**  Copyright (c) 2019-2024 Dr. Ralf S. Engelschall <http://engelschall.com>
 **  Licensed under MIT <http://spdx.org/licenses/MIT.html>
 */
 
@@ -47,7 +47,7 @@ if (argv.help) {
 if (argv.version) {
     console.log(`${my.name} ${my.version} (Node.js ${process.versions.node}, Nunjucks: ${my.dependencies.nunjucks})`)
     console.log(`${my.description}`)
-    console.log(`Copyright (c) 2019-2023 ${my.author.name} <${my.author.url}>`)
+    console.log(`Copyright (c) 2019-2024 ${my.author.name} <${my.author.url}>`)
     console.log(`Licensed under ${my.license} <http://spdx.org/licenses/${my.license}.html>`)
     process.exit(0)
 }
