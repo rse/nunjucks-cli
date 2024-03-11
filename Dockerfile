@@ -5,12 +5,12 @@
 #   build arguments (early)
 ARG         IMAGE_PREFIX=docker.io/engelschall/
 ARG         IMAGE_NAME=nunjucks-cli
-ARG         IMAGE_VERSION=1.5.0
-ARG         IMAGE_RELEASE=20231003
+ARG         IMAGE_VERSION=1.5.2
+ARG         IMAGE_RELEASE=20240311
 ARG         IMAGE_ALIAS=latest
 
 #   derive image from a certain base image
-FROM        node:20.8-alpine3.18
+FROM        node:20.11-alpine3.18
 
 #   add additional build tools
 RUN         apk update && \
@@ -28,8 +28,8 @@ ENV         HOME=/app
 
 #   install tool
 RUN         npm install -g \
-                @rse/nunjucks-cli@1.5.0 \
-                @rse/nunjucks-addons@1.0.6
+                @rse/nunjucks-cli@1.5.2 \
+                @rse/nunjucks-addons@1.0.8
 
 #   cleanup Alpine
 RUN         rm -rf /var/cache/apk/*
