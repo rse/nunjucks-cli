@@ -10,7 +10,7 @@ ARG         IMAGE_RELEASE=20240311
 ARG         IMAGE_ALIAS=latest
 
 #   derive image from a certain base image
-FROM        node:20.11-alpine3.18
+FROM        node:24-alpine3.21
 
 #   add additional build tools
 RUN         apk update && \

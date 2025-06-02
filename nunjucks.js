@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /*
 **  nunjucks -- Nunjucks Template Rendering Command-Line Interface
-**  Copyright (c) 2019-2024 Dr. Ralf S. Engelschall <http://engelschall.com>
+**  Copyright (c) 2019-2025 Dr. Ralf S. Engelschall <http://engelschall.com>
 **  Licensed under MIT <http://spdx.org/licenses/MIT.html>
 */
 
