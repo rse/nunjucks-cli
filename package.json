@@ -21,6 +21,7 @@
         "nunjucks":               "nunjucks.js"
     },
     "man":                        "nunjucks.1",
+    "type":                       "module",
     "dependencies": {
         "nunjucks":               "3.2.4",
         "chalk":                  "4.1.0",

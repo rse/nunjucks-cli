@@ -5,22 +5,22 @@
 **  Licensed under MIT <http://spdx.org/licenses/MIT.html>
 */
 
-/*  own information  */
-const my        = require("./package.json")
-
 /*  internal requirements  */
-const fs        = require("node:fs")
-const path      = require("node:path")
+import fs          from "node:fs"
+import path        from "node:path"
 
 /*  external requirements  */
-const commander = require("commander")
-const chalk     = require("chalk")
-const jsYAML    = require("js-yaml")
-const nunjucks  = require("nunjucks")
-const deepmerge = require("deepmerge")
+import { Command } from "commander"
+import chalk       from "chalk"
+import jsYAML      from "js-yaml"
+import nunjucks    from "nunjucks"
+import deepmerge   from "deepmerge"
+
+/*  load my own information  */
+const my = JSON.parse(await fs.promises.readFile(new URL("./package.json", import.meta.url)))
 
 /*  parse command-line arguments  */
-const program = new commander.Command()
+const program = new Command()
 program.name("nunjucks")
     .description("Nunjucks Template Rendering Command-Line Interface")
     .showHelpAfterError("hint: use option --help for usage information")
@@ -47,7 +47,7 @@ if (argv.help) {
 if (argv.version) {
     console.log(`${my.name} ${my.version} (Node.js ${process.versions.node}, Nunjucks: ${my.dependencies.nunjucks})`)
     console.log(`${my.description}`)
-    console.log(`Copyright (c) 2019-2024 ${my.author.name} <${my.author.url}>`)
+    console.log(`Copyright (c) 2019-2025 ${my.author.name} <${my.author.url}>`)
     console.log(`Licensed under ${my.license} <http://spdx.org/licenses/${my.license}.html>`)
     process.exit(0)
 }
