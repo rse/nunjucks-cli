@@ -18,7 +18,7 @@
         "url":                    "http://github.com/rse/nunjucks-cli/issues"
     },
     "bin": {
-        "nunjucks":               "nunjucks.ts"
+        "nunjucks":               "nunjucks.js"
     },
     "man":                        "nunjucks.1",
     "type":                       "module",
