@@ -9,10 +9,12 @@ import pluginStd     from "neostandard"
 import pluginN       from "eslint-plugin-n"
 import pluginImport  from "eslint-plugin-import"
 import pluginPromise from "eslint-plugin-promise"
+import pluginTS      from "typescript-eslint"
 import globals       from "globals"
 
 export default [
     pluginJs.configs.recommended,
+    ...pluginTS.configs.recommended,
     ...pluginStd({
         ignores: pluginStd.resolveIgnoresFromGitignore()
     }),
@@ -22,7 +24,7 @@ export default [
             "import":  pluginImport,
             "promise": pluginPromise
         },
-        files:   [ "**/*.js" ],
+        files:   [ "**/*.js", "**/*.ts" ],
         ignores: [ "dst/" ],
         languageOptions: {
             ecmaVersion: 2022,
@@ -58,7 +60,10 @@ export default [
             "@stylistic/array-bracket-spacing":                   "off",
             "@stylistic/lines-between-class-members":             "off",
             "@stylistic/multiline-ternary":                       "off",
-            "@stylistic/quote-props":                             "off"
+            "@stylistic/quote-props":                             "off",
+
+            "@typescript-eslint/no-explicit-any":                 "off",
+            "@typescript-eslint/no-unused-vars":                  [ "error", { "argsIgnorePattern": "^_", "caughtErrorsIgnorePattern": "^_" } ]
         }
     }
 ]

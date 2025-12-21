@@ -5,36 +5,71 @@
 **  Licensed under MIT <http://spdx.org/licenses/MIT.html>
 */
 
-/*  internal requirements  */
-import fs          from "node:fs"
-import path        from "node:path"
+/*  built-in requirements  */
+import fs                from "node:fs"
+import path              from "node:path"
+import { createRequire } from "node:module"
 
 /*  external requirements  */
-import { Command } from "commander"
-import chalk       from "chalk"
-import jsYAML      from "js-yaml"
-import nunjucks    from "nunjucks"
-import deepmerge   from "deepmerge"
+import { Command }       from "commander"
+import chalk             from "chalk"
+import jsYAML            from "js-yaml"
+import nunjucks          from "nunjucks"
+import deepmerge         from "deepmerge"
+
+/*  type definitions  */
+type PackageInfo = {
+    name:         string
+    version:      string
+    description:  string
+    author:       { name: string; email: string; url: string }
+    license:      string
+    dependencies: { nunjucks: string }
+}
+type ContextType = Record<string, any>
+type OptionsType = {
+    autoescape?:       boolean
+    throwOnUndefined?: boolean
+    trimBlocks?:       boolean
+    lstripBlocks?:     boolean
+    watch?:            boolean
+    noCache?:          boolean
+}
+type CLIOptions = {
+    help:      boolean
+    version:   boolean
+    config:    string
+    option:    string[]
+    defines:   string[]
+    define:    string[]
+    extension: string[]
+    output:    string
+    _:         string[]
+}
 
 /*  load my own information  */
-const my = JSON.parse(await fs.promises.readFile(new URL("./package.json", import.meta.url)))
+const my: PackageInfo = JSON.parse(await fs.promises.readFile(new URL("./package.json", import.meta.url), "utf-8"))
 
 /*  parse command-line arguments  */
 const program = new Command()
+const reduceArray = (v: string, l: string[]) => l.concat([ v ])
 program.name("nunjucks")
     .description("Nunjucks Template Rendering Command-Line Interface")
     .showHelpAfterError("hint: use option --help for usage information")
-    .option("-h, --help", "show usage help", false)
-    .option("-V, --version", "show program version information", false)
-    .option("-c, --config <config-file>", "load Nunjucks configuration YAML file", "")
-    .option("-C, --option <key>=<value>", "set Nunjucks configuration option", (v, l) => l.concat([ v ]), [])
-    .option("-d, --defines <context-file>", "load context definition YAML file", (v, l) => l.concat([ v ]), [])
-    .option("-D, --define <key>=<value>", "set context definition key/value", (v, l) => l.concat([ v ]), [])
-    .option("-e, --extension <module-name>", "load Nunjucks JavaScript extension module", (v, l) => l.concat([ v ]), [])
-    .option("-o, --output <output-file>", "save output file", "-")
+    .option("-h, --help",                    "show usage help",                                        false)
+    .option("-V, --version",                 "show program version information",                       false)
+    .option("-c, --config <config-file>",    "load Nunjucks configuration YAML file",                  "")
+    .option("-C, --option <key>=<value>",    "set Nunjucks configuration option",         reduceArray, [])
+    .option("-d, --defines <context-file>",  "load context definition YAML file",         reduceArray, [])
+    .option("-D, --define <key>=<value>",    "set context definition key/value",          reduceArray, [])
+    .option("-e, --extension <module-name>", "load Nunjucks JavaScript extension module", reduceArray, [])
+    .option("-o, --output <output-file>",    "save output file",                                       "-")
     .argument("[<input-file>]", "input file")
 program.parse(process.argv)
-const argv = { ...program.opts(), _: program.args }
+const argv: CLIOptions = {
+    ...program.opts(),
+    _: program.args
+} as CLIOptions
 
 /*  handle special help request  */
 if (argv.help) {
@@ -58,7 +93,7 @@ if (argv._.length > 1) {
     console.error(chalk.red("nunjucks: ERROR: invalid number of arguments (zero or one input file expected)"))
     process.exit(1)
 }
-let inputFile = argv._[0] ?? "-"
+let inputFile: string = argv._[0] ?? "-"
 if (inputFile === "-") {
     inputFile = "<stdin>"
     process.stdin.setEncoding("utf-8")
@@ -67,9 +102,9 @@ if (inputFile === "-") {
     while (true) {
         let bytesRead = 0
         try {
-            bytesRead = fs.readSync(process.stdin.fd, buf, 0, BUFSIZE)
+            bytesRead = fs.readSync(process.stdin.fd, buf, 0, BUFSIZE, null)
         }
-        catch (ex) {
+        catch (ex: any) {
             if      (ex.code === "EAGAIN") continue
             else if (ex.code === "EOF")    break
             else                           throw ex
@@ -88,12 +123,12 @@ else {
 }
 
 /*  provide context variables for template  */
-let context = {}
+let context: ContextType = {}
 for (const define of argv.defines) {
     try {
-        context = deepmerge(context, jsYAML.load(fs.readFileSync(define, { encoding: "utf8" })))
+        context = deepmerge(context, jsYAML.load(fs.readFileSync(define, { encoding: "utf8" })) as ContextType)
     }
-    catch (ex) {
+    catch (ex: any) {
         console.error(chalk.red(`nunjucks: ERROR: failed to load context YAML file: ${ex.toString()}`))
         process.exit(1)
     }
@@ -103,46 +138,53 @@ for (const define of argv.defines) {
 context.env = process.env
 
 /*  add context defines  */
-argv.define.forEach((define) => {
-    let [ , key, val ] = define.match(/^([^=]+)(?:=(.*))?$/)
+argv.define.forEach((define: string) => {
+    const match = define.match(/^([^=]+)(?:=(.*))?$/)
+    if (!match)
+        return
+    let [ , key, val ]: (string | undefined)[] = match
+    if (!key)
+        return
     if (val === undefined)
-        val = true
+        val = "true"
     context[key] = val
 })
 
 /*  determine Nunjucks options  */
-let options = {}
+let options: OptionsType = {}
 if (argv.config) {
     try {
-        options = jsYAML.load(fs.readFileSync(argv.config, { encoding: "utf8" }))
+        options = jsYAML.load(fs.readFileSync(argv.config, { encoding: "utf8" })) as OptionsType
     }
-    catch (ex) {
+    catch (ex: any) {
         console.error(chalk.red(`nunjucks: ERROR: failed to load options YAML file: ${ex.toString()}`))
         process.exit(1)
     }
 }
 if (argv.option.length > 0)
     options = Object.assign(options, argv.option)
-options = Object.assign({}, {
+options = {
     autoescape:       false,
     throwOnUndefined: false,
     trimBlocks:       true,
     lstripBlocks:     true,
     watch:            false,
-    noCache:          true
-}, options)
+    noCache:          true,
+    ...options
+}
 
 /*  configure environment  */
 const env = nunjucks.configure(inputFile, options)
 
 /*  load external extension files  */
 for (const extension of argv.extension) {
-    let modpath = path.resolve(extension)
+    let modpath: string | null = path.resolve(extension)
     if (!fs.existsSync(modpath)) {
         try {
+            const require = createRequire(import.meta.url)
             modpath = require.resolve(extension)
         }
-        catch (ex) {
+        catch (_ex) {
             modpath = null
         }
     }
@@ -150,7 +192,19 @@ for (const extension of argv.extension) {
         console.error(chalk.red(`nunjucks: ERROR: failed to find extension module: ${extension}`))
         process.exit(1)
     }
-    const mod = require(modpath)
+
+    /*  dynamically import the module  */
+    let mod: any
+    try {
+        mod = await import(modpath)
+
+        /*  handle both default and named exports  */
+        mod = mod.default ?? mod
+    }
+    catch (ex: any) {
+        console.error(chalk.red(`nunjucks: ERROR: failed to load extension module: ${ex.toString()}`))
+        process.exit(1)
+    }
     if (!(mod !== null && typeof mod === "function")) {
         console.error(chalk.red(`nunjucks: ERROR: failed to call extension file: ${modpath}`))
         process.exit(1)
@@ -159,11 +213,11 @@ for (const extension of argv.extension) {
 }
 
 /*  render Nunjucks template  */
-let output
+let output: string
 try {
     output = env.renderString(input, context)
 }
-catch (ex) {
+catch (ex: any) {
     console.error(chalk.red(`nunjucks: ERROR: failed to render template: ${ex.toString()}`))
     process.exit(1)
 }

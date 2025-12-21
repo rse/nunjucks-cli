@@ -18,10 +18,13 @@
         "url":                    "http://github.com/rse/nunjucks-cli/issues"
     },
     "bin": {
-        "nunjucks":               "nunjucks.js"
+        "nunjucks":               "nunjucks.ts"
     },
     "man":                        "nunjucks.1",
     "type":                       "module",
+    "engines": {
+        "node":                   ">=22.18.0"
+    },
     "dependencies": {
         "nunjucks":               "3.2.4",
         "chalk":                  "5.6.2",
@@ -39,11 +42,17 @@
         "globals":                "16.5.0",
         "remark-cli":             "12.0.1",
         "remark":                 "15.0.1",
-        "remark-man":             "9.0.0"
+        "remark-man":             "9.0.0",
+        "typescript":             "5.9.3",
+        "typescript-eslint":      "8.50.0",
+
+        "@types/node":            "25.0.3",
+        "@types/js-yaml":         "4.0.9",
+        "@types/nunjucks":        "3.2.6"
     },
     "scripts": {
-        "lint":                   "eslint --config eslint.mjs nunjucks.js",
+        "lint":                   "eslint --config eslint.mjs nunjucks.ts && tsc --project tsconfig.json",
         "man":                    "remark --quiet --use remark-man --output nunjucks.1 nunjucks.md",
-        "test":                   "echo 'Hello, {{who}}!' | node nunjucks.js -D who=world -"
+        "test":                   "echo 'Hello, {{who}}!' | node nunjucks.ts -D who=world -"
     }
 }
