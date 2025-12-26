@@ -2,6 +2,11 @@
 ChangeLog
 =========
 
+2.0.1 (2025-12-26)
+------------------
+
+- IMPROVEMENT: add option -E for loading .env files
+
 2.0.0 (2025-12-21)
 ------------------
 

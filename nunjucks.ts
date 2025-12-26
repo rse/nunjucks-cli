@@ -16,6 +16,7 @@ import chalk             from "chalk"
 import jsYAML            from "js-yaml"
 import nunjucks          from "nunjucks"
 import deepmerge         from "deepmerge"
+import dotenvx           from "@dotenvx/dotenvx"
 
 /*  type definitions  */
 type PackageInfo = {
@@ -38,6 +39,7 @@ type OptionsType = {
 type CLIOptions = {
     help:      boolean
     version:   boolean
+    env:       string[]
     config:    string
     option:    string[]
     defines:   string[]
@@ -58,6 +60,7 @@ program.name("nunjucks")
     .showHelpAfterError("hint: use option --help for usage information")
     .option("-h, --help",                    "show usage help",                                        false)
     .option("-V, --version",                 "show program version information",                       false)
+    .option("-E, --env <env-file>",          "load environment key/value file",           reduceArray, [])
     .option("-c, --config <config-file>",    "load Nunjucks configuration YAML file",                  "")
     .option("-C, --option <key>=<value>",    "set Nunjucks configuration option",         reduceArray, [])
     .option("-d, --defines <context-file>",  "load context definition YAML file",         reduceArray, [])
@@ -132,6 +135,20 @@ for (const define of argv.defines) {
         console.error(chalk.red(`nunjucks: ERROR: failed to load context YAML file: ${ex.toString()}`))
         process.exit(1)
     }
+}
+
+/*  load environment variables from environment files  */
+if (argv.env.length > 0) {
+    for (const env of argv.env) {
+        if (!fs.existsSync(env)) {
+            console.error(chalk.red(`nunjucks: ERROR: environment file not found: "${env}"`))
+            process.exit(1)
+        }
+    }
+    dotenvx.config({
+        path:  argv.env,
+        quiet: true
+    })
 }
 
 /*  expose environment variables to template  */

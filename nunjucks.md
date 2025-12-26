@@ -6,6 +6,7 @@
 `nunjucks`
 \[`-h`|`--help`\]
 \[`-V`|`--version`\]
+\[`-E`|`--env` *env-file*\]
 \[`-c`|`--config` *config-file*\]
 \[`-C`|`--option` *key*=*value*\]
 \[`-d`|`--defines` *context-file*\]
@@ -27,33 +28,37 @@ It optionally can load Nunjucks addons like the ones from the companion
 
 The following top-level options and arguments exist:
 
-- \[`-h`|`--help`\]
+- \[`-h`|`--help`\]:
   Show usage help.
 
-- \[`-V`|`--version`\]
+- \[`-V`|`--version`\]:
   Show program version information.
 
-- \[`-c`|`--config` *config-file*\]
+- \[`-E`|`--env` *env-file*\]:
+  Load environment file with key/value definitions.
+  These can later be accessed with the global `env` variable.
+
+- \[`-c`|`--config` *config-file*\]:
   Load Nunjucks configuration YAML file.
 
-- \[`-C`|`--option` *key*=*value*\]
+- \[`-C`|`--option` *key*=*value*\]:
   Set Nunjucks configuration option.
 
-- \[`-d`|`--defines` *context-file*\]
+- \[`-d`|`--defines` *context-file*\]:
   Load context definition YAML file.
   Can occur multiple times.
 
-- \[`-D`|`--define` *key*=*value*\]
+- \[`-D`|`--define` *key*=*value*\]:
   Set context definition key/value.
   Can occur multiple times.
 
-- \[`-e`|`--extension` *module-name*\]
+- \[`-e`|`--extension` *module-name*\]:
   Load Nunjucks JavaScript extension module (installed via NPM).
 
-- \[`-o`|`--output` *output-file*|`-`\]
+- \[`-o`|`--output` *output-file*|`-`\]:
   Save output file (or stdout).
 
-- \[`<input-file>`|`-`\]
+- \[`<input-file>`|`-`\]:
   Load input file (or stdin).
 
 ## EXAMPLE
