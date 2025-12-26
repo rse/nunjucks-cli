@@ -24,8 +24,10 @@ DOCKER_BUILD_FLAGS ?= --pull --no-cache
 build: Dockerfile
 	@$(IMAGE_CONFIG) && \
 	echo "++ building Docker image $${IMAGE_PREFIX}$${IMAGE_NAME}:$${IMAGE_VERSION}-$${IMAGE_RELEASE} ($${IMAGE_ALIAS})" && \
-	docker build \
+	docker buildx build \
 	    $(DOCKER_BUILD_FLAGS) \
+	    --progress plain \
+	    --platform linux/amd64,linux/arm64 \
 	    --build-arg "IMAGE_PREFIX=$${IMAGE_PREFIX}" \
 	    --build-arg "IMAGE_NAME=$${IMAGE_NAME}" \
 	    --build-arg "IMAGE_VERSION=$${IMAGE_VERSION}" \
