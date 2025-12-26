@@ -34,7 +34,7 @@ The following top-level options and arguments exist:
 - \[`-V`|`--version`\]:
   Show program version information.
 
-- \[`-E`|`--env` *env-file*\]:
+- \[`-e`|`--env` *env-file*\]:
   Load environment file with key/value definitions.
   These can later be accessed with the global `env` variable.
 
