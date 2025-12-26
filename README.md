@@ -48,6 +48,14 @@ $ npx --yes --package @rse/nunjucks-cli --package @rse/nunjucks-addons -- \
   nunjucks -e @rse/nunjucks-addons [...]
 ```
 
+Furthermore, instead of using NPM at all, you can also use Docker (at
+least as long as you are working with stdin/stdout or perform the
+corresponding bind-mounts):
+
+```sh
+$ docker run -i --rm engelschall/nunjucks-cli [...] -
+```
+
 Command-Line Interface (CLI)
 ----------------------------
 
