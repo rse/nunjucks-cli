@@ -57,6 +57,8 @@ Short excerpt of the CLI options and arguments from the companion [Unix manpage]
 $ nunjucks
   [-h|--help]
   [-V|--version]
+  [-e|--env <env-file>]
+  [-E|--envs]
   [-c|--config <config-file>]
   [-C|--option <key>=<value>]
   [-d|--defines <context-file>]
@@ -70,6 +72,12 @@ $ nunjucks
   Show usage help.
 - `-V`|`--version`:<br/>
   Show program version information.
+- `-e`|`--env` *env-file*:<br/>
+  Load environment file with key/value definitions.
+  These can later be accessed with the global `env` variable.
+- [`-E`|`--envs`]:<br/>
+  Automatically load environment files with key/value definitions
+  from all `.env` files in current and all parent directories.
 - `-c`|`--config` `<config-file>`:<br/>
   Load Nunjucks configuration YAML file.
 - `-C`|`--option` `<key>=<value>`:<br/>
