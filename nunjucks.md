@@ -6,12 +6,12 @@
 `nunjucks`
 \[`-h`|`--help`\]
 \[`-V`|`--version`\]
-\[`-E`|`--env` *env-file*\]
+\[`-e`|`--env` *env-file*\]
 \[`-c`|`--config` *config-file*\]
 \[`-C`|`--option` *key*=*value*\]
 \[`-d`|`--defines` *context-file*\]
 \[`-D`|`--define` *key*=*value*\]
-\[`-e`|`--extension` *module-name*\]
+\[`-p`|`--plugin` *module-name*\]
 \[`-o`|`--output` *output-file*|`-`\]
 \[*input-file*|`-`\]
 
@@ -52,8 +52,8 @@ The following top-level options and arguments exist:
   Set context definition key/value.
   Can occur multiple times.
 
-- \[`-e`|`--extension` *module-name*\]:
-  Load Nunjucks JavaScript extension module (installed via NPM).
+- \[`-p`|`--plugin` *module-name*\]:
+  Load Nunjucks JavaScript plugin module (installed via NPM).
 
 - \[`-o`|`--output` *output-file*|`-`\]:
   Save output file (or stdout).

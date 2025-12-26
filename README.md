@@ -61,7 +61,7 @@ $ nunjucks
   [-C|--option <key>=<value>]
   [-d|--defines <context-file>]
   [-D|--define <key>=<value>]
-  [-e|--extension <module-name>]
+  [-p|--plugin <module-name>]
   [-o|--output <output-file>|-]
   <input-file>|-
 ```
@@ -80,8 +80,8 @@ $ nunjucks
 - `-D`|`--define` `<key>=<value>`:<br/>
   Set context definition key/value.
   Can occur multiple times.
-- `-e`|`--extension` `<module-name>`:<br/>
-  Load Nunjucks JavaScript extension module (installed via NPM).
+- `-p`|`--plugin` `<module-name>`:<br/>
+  Load Nunjucks JavaScript plugin module (installed via NPM).
 - `-o`|`--output` `<output-file>`|`-`:<br/>
   Save output file (or stdout).
 - `<input-file>`|`-`:<br/>

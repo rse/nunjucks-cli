@@ -44,7 +44,7 @@ type CLIOptions = {
     option:    string[]
     defines:   string[]
     define:    string[]
-    extension: string[]
+    plugin:    string[]
     output:    string
     _:         string[]
 }
@@ -65,7 +65,7 @@ program.name("nunjucks")
     .option("-C, --option <key>=<value>",    "set Nunjucks configuration option",         reduceArray, [])
     .option("-d, --defines <context-file>",  "load context definition YAML file",         reduceArray, [])
     .option("-D, --define <key>=<value>",    "set context definition key/value",          reduceArray, [])
-    .option("-e, --extension <module-name>", "load Nunjucks JavaScript extension module", reduceArray, [])
+    .option("-p, --plugin <module-name>",    "load Nunjucks JavaScript plugin module",    reduceArray, [])
     .option("-o, --output <output-file>",    "save output file",                                       "-")
     .argument("[<input-file>]", "input file")
 program.parse(process.argv)
@@ -193,20 +193,20 @@ options = {
 /*  configure environment  */
 const env = nunjucks.configure(inputFile, options)
 
-/*  load external extension files  */
-for (const extension of argv.extension) {
-    let modpath: string | null = path.resolve(extension)
+/*  load external plugin modules  */
+for (const plugin of argv.plugin) {
+    let modpath: string | null = path.resolve(plugin)
     if (!fs.existsSync(modpath)) {
         try {
             const require = createRequire(import.meta.url)
-            modpath = require.resolve(extension)
+            modpath = require.resolve(plugin)
         }
         catch (_ex) {
             modpath = null
         }
     }
     if (modpath === null) {
-        console.error(chalk.red(`nunjucks: ERROR: failed to find extension module: ${extension}`))
+        console.error(chalk.red(`nunjucks: ERROR: failed to find plugin module: ${plugin}`))
         process.exit(1)
     }
 
@@ -219,11 +219,11 @@ for (const extension of argv.extension) {
         mod = mod.default ?? mod
     }
     catch (ex: any) {
-        console.error(chalk.red(`nunjucks: ERROR: failed to load extension module: ${ex.toString()}`))
+        console.error(chalk.red(`nunjucks: ERROR: failed to load plugin module: ${ex.toString()}`))
         process.exit(1)
     }
     if (!(mod !== null && typeof mod === "function")) {
-        console.error(chalk.red(`nunjucks: ERROR: failed to call extension file: "${modpath}"`))
+        console.error(chalk.red(`nunjucks: ERROR: failed to call plugin file: "${modpath}"`))
         process.exit(1)
     }
     mod(env)
