@@ -7,6 +7,7 @@
 \[`-h`|`--help`\]
 \[`-V`|`--version`\]
 \[`-e`|`--env` *env-file*\]
+\[`-E`|`--envs`\]
 \[`-c`|`--config` *config-file*\]
 \[`-C`|`--option` *key*=*value*\]
 \[`-d`|`--defines` *context-file*\]
@@ -37,6 +38,10 @@ The following top-level options and arguments exist:
 - \[`-e`|`--env` *env-file*\]:
   Load environment file with key/value definitions.
   These can later be accessed with the global `env` variable.
+
+- \[`-E`|`--envs`\]:
+  Automatically load environment files with key/value definitions
+  from all `.env` files in current and all parent directories.
 
 - \[`-c`|`--config` *config-file*\]:
   Load Nunjucks configuration YAML file.

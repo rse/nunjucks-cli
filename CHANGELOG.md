@@ -6,7 +6,8 @@ ChangeLog
 ------------------
 
 - REFACTOR: change option -e/--extension to option -p/--plugin
-- IMPROVEMENT: add new option -e for loading .env files
+- IMPROVEMENT: add new option -e for loading custom .env files
+- IMPROVEMENT: add new option -E for loading standard .env files
 
 2.0.0 (2025-12-21)
 ------------------

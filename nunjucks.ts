@@ -17,6 +17,7 @@ import jsYAML            from "js-yaml"
 import nunjucks          from "nunjucks"
 import deepmerge         from "deepmerge"
 import dotenvx           from "@dotenvx/dotenvx"
+import * as findup       from "find-up"
 
 /*  type definitions  */
 type PackageInfo = {
@@ -40,6 +41,7 @@ type CLIOptions = {
     help:      boolean
     version:   boolean
     env:       string[]
+    envs:      boolean
     config:    string
     option:    string[]
     defines:   string[]
@@ -61,6 +63,7 @@ program.name("nunjucks")
     .option("-h, --help",                    "show usage help",                                        false)
     .option("-V, --version",                 "show program version information",                       false)
     .option("-e, --env <env-file>",          "load environment key/value file",           reduceArray, [])
+    .option("-E, --envs",                    "load all environment key/value files",                   false)
     .option("-c, --config <config-file>",    "load Nunjucks configuration YAML file",                  "")
     .option("-C, --option <key>=<value>",    "set Nunjucks configuration option",         reduceArray, [])
     .option("-d, --defines <context-file>",  "load context definition YAML file",         reduceArray, [])
@@ -137,6 +140,13 @@ for (const define of argv.defines) {
     }
 }
 
+/*  load environment variables from all default files  */
+if (argv.envs) {
+    const files = findup.findUpMultipleSync(".env")
+    if (files.length > 0)
+        dotenvx.config({ path: files, quiet: true })
+}
+
 /*  load environment variables from environment files  */
 if (argv.env.length > 0) {
     for (const env of argv.env) {
@@ -145,10 +155,7 @@ if (argv.env.length > 0) {
             process.exit(1)
         }
     }
-    dotenvx.config({
-        path:  argv.env,
-        quiet: true
-    })
+    dotenvx.config({ path: argv.env, quiet: true })
 }
 
 /*  expose environment variables to template  */
