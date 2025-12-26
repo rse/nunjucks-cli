@@ -19,6 +19,9 @@ import deepmerge         from "deepmerge"
 import dotenvx           from "@dotenvx/dotenvx"
 import * as findup       from "find-up"
 
+/*  internal requirements  */
+import pkg               from "./package.json" with { type: "json" }
+
 /*  type definitions  */
 type PackageInfo = {
     name:         string
@@ -51,207 +54,212 @@ type CLIOptions = {
     _:         string[]
 }
 
-/*  load my own information  */
-const my: PackageInfo = JSON.parse(await fs.promises.readFile(new URL("./package.json", import.meta.url), "utf-8"))
+/*  establish asynchronous environment  */
+;(async () => {
+    /*  load my own information  */
+    const my = pkg as PackageInfo
 
-/*  parse command-line arguments  */
-const program = new Command()
-const reduceArray = (v: string, l: string[]) => l.concat([ v ])
-program.name("nunjucks")
-    .description("Nunjucks Template Rendering Command-Line Interface")
-    .showHelpAfterError("hint: use option --help for usage information")
-    .option("-h, --help",                    "show usage help",                                        false)
-    .option("-V, --version",                 "show program version information",                       false)
-    .option("-e, --env <env-file>",          "load environment key/value file",           reduceArray, [])
-    .option("-E, --envs",                    "load all environment key/value files",                   false)
-    .option("-c, --config <config-file>",    "load Nunjucks configuration YAML file",                  "")
-    .option("-C, --option <key>=<value>",    "set Nunjucks configuration option",         reduceArray, [])
-    .option("-d, --defines <context-file>",  "load context definition YAML file",         reduceArray, [])
-    .option("-D, --define <key>=<value>",    "set context definition key/value",          reduceArray, [])
-    .option("-p, --plugin <module-name>",    "load Nunjucks JavaScript plugin module",    reduceArray, [])
-    .option("-o, --output <output-file>",    "save output file",                                       "-")
-    .argument("[<input-file>]", "input file")
-program.parse(process.argv)
-const argv: CLIOptions = {
-    ...program.opts(),
-    _: program.args
-} as CLIOptions
+    /*  parse command-line arguments  */
+    const program = new Command()
+    const reduceArray = (v: string, l: string[]) => l.concat([ v ])
+    program.name("nunjucks")
+        .description("Nunjucks Template Rendering Command-Line Interface")
+        .showHelpAfterError("hint: use option --help for usage information")
+        .option("-h, --help",                    "show usage help",                                        false)
+        .option("-V, --version",                 "show program version information",                       false)
+        .option("-e, --env <env-file>",          "load environment key/value file",           reduceArray, [])
+        .option("-E, --envs",                    "load all environment key/value files",                   false)
+        .option("-c, --config <config-file>",    "load Nunjucks configuration YAML file",                  "")
+        .option("-C, --option <key>=<value>",    "set Nunjucks configuration option",         reduceArray, [])
+        .option("-d, --defines <context-file>",  "load context definition YAML file",         reduceArray, [])
+        .option("-D, --define <key>=<value>",    "set context definition key/value",          reduceArray, [])
+        .option("-p, --plugin <module-name>",    "load Nunjucks JavaScript plugin module",    reduceArray, [])
+        .option("-o, --output <output-file>",    "save output file",                                       "-")
+        .argument("[<input-file>]", "input file")
+    program.parse(process.argv)
+    const argv: CLIOptions = {
+        ...program.opts(),
+        _: program.args
+    } as CLIOptions
 
-/*  handle special help request  */
-if (argv.help) {
-    console.log(program.helpInformation())
-    console.log("Example:\n  $ echo \"Hello, {{ who }}!\" | nunjucks -Dwho=World -\n")
-    process.exit(0)
-}
+    /*  handle special help request  */
+    if (argv.help) {
+        console.log(program.helpInformation())
+        console.log("Example:\n  $ echo \"Hello, {{ who }}!\" | nunjucks -Dwho=World -\n")
+        process.exit(0)
+    }
 
-/*  handle special version request  */
-if (argv.version) {
-    console.log(`${my.name} ${my.version} (Node.js ${process.versions.node}, Nunjucks: ${my.dependencies.nunjucks})`)
-    console.log(`${my.description}`)
-    console.log(`Copyright (c) 2019-2025 ${my.author.name} <${my.author.url}>`)
-    console.log(`Licensed under ${my.license} <http://spdx.org/licenses/${my.license}.html>`)
-    process.exit(0)
-}
+    /*  handle special version request  */
+    if (argv.version) {
+        console.log(`${my.name} ${my.version} (Node.js ${process.versions.node}, Nunjucks: ${my.dependencies.nunjucks})`)
+        console.log(`${my.description}`)
+        console.log(`Copyright (c) 2019-2025 ${my.author.name} <${my.author.url}>`)
+        console.log(`Licensed under ${my.license} <http://spdx.org/licenses/${my.license}.html>`)
+        process.exit(0)
+    }
 
-/*  read input file  */
-let input = ""
-if (argv._.length > 1) {
-    console.error(chalk.red("nunjucks: ERROR: invalid number of arguments (zero or one input file expected)"))
-    process.exit(1)
-}
-let inputFile: string = argv._[0] ?? "-"
-if (inputFile === "-") {
-    inputFile = "<stdin>"
-    process.stdin.setEncoding("utf-8")
-    const BUFSIZE = 256
-    const buf = Buffer.alloc(BUFSIZE)
-    while (true) {
-        let bytesRead = 0
+    /*  read input file  */
+    let input = ""
+    if (argv._.length > 1) {
+        console.error(chalk.red("nunjucks: ERROR: invalid number of arguments (zero or one input file expected)"))
+        process.exit(1)
+    }
+    let inputFile: string = argv._[0] ?? "-"
+    if (inputFile === "-") {
+        inputFile = "<stdin>"
+        process.stdin.setEncoding("utf-8")
+        const BUFSIZE = 256
+        const buf = Buffer.alloc(BUFSIZE)
+        while (true) {
+            let bytesRead = 0
+            try {
+                bytesRead = fs.readSync(process.stdin.fd, buf, 0, BUFSIZE, null)
+            }
+            catch (ex: any) {
+                if      (ex.code === "EAGAIN") continue
+                else if (ex.code === "EOF")    break
+                else                           throw ex
+            }
+            if (bytesRead === 0)
+                break
+            input += buf.toString("utf8", 0, bytesRead)
+        }
+    }
+    else {
+        if (!fs.existsSync(inputFile)) {
+            console.error(chalk.red(`nunjucks: ERROR: failed to find input file: "${inputFile}"`))
+            process.exit(1)
+        }
+        input = fs.readFileSync(inputFile, { encoding: "utf8" })
+    }
+
+    /*  provide context variables for template  */
+    let context: ContextType = {}
+    for (const define of argv.defines) {
         try {
-            bytesRead = fs.readSync(process.stdin.fd, buf, 0, BUFSIZE, null)
+            context = deepmerge(context, jsYAML.load(fs.readFileSync(define, { encoding: "utf8" })) as ContextType)
         }
         catch (ex: any) {
-            if      (ex.code === "EAGAIN") continue
-            else if (ex.code === "EOF")    break
-            else                           throw ex
-        }
-        if (bytesRead === 0)
-            break
-        input += buf.toString("utf8", 0, bytesRead)
-    }
-}
-else {
-    if (!fs.existsSync(inputFile)) {
-        console.error(chalk.red(`nunjucks: ERROR: failed to find input file: "${inputFile}"`))
-        process.exit(1)
-    }
-    input = fs.readFileSync(inputFile, { encoding: "utf8" })
-}
-
-/*  provide context variables for template  */
-let context: ContextType = {}
-for (const define of argv.defines) {
-    try {
-        context = deepmerge(context, jsYAML.load(fs.readFileSync(define, { encoding: "utf8" })) as ContextType)
-    }
-    catch (ex: any) {
-        console.error(chalk.red(`nunjucks: ERROR: failed to load context YAML file: ${ex.toString()}`))
-        process.exit(1)
-    }
-}
-
-/*  load environment variables from all default files  */
-if (argv.envs) {
-    const files = findup.findUpMultipleSync(".env")
-    if (files.length > 0)
-        dotenvx.config({ path: files, quiet: true })
-}
-
-/*  load environment variables from environment files  */
-if (argv.env.length > 0) {
-    for (const env of argv.env) {
-        if (!fs.existsSync(env)) {
-            console.error(chalk.red(`nunjucks: ERROR: environment file not found: "${env}"`))
+            console.error(chalk.red(`nunjucks: ERROR: failed to load context YAML file: ${ex.toString()}`))
             process.exit(1)
         }
     }
-    dotenvx.config({ path: argv.env, quiet: true })
-}
 
-/*  expose environment variables to template  */
-context.env = process.env
-
-/*  add context defines  */
-argv.define.forEach((define: string) => {
-    const match = define.match(/^([^=]+)(?:=(.*))?$/)
-    if (!match)
-        return
-    let [ , key, val ]: (string | undefined)[] = match
-    if (!key)
-        return
-    if (val === undefined)
-        val = "true"
-    context[key] = val
-})
-
-/*  determine Nunjucks options  */
-let options: OptionsType = {}
-if (argv.config) {
-    try {
-        options = jsYAML.load(fs.readFileSync(argv.config, { encoding: "utf8" })) as OptionsType
+    /*  load environment variables from all default files  */
+    if (argv.envs) {
+        const files = findup.findUpMultipleSync(".env")
+        if (files.length > 0)
+            dotenvx.config({ path: files, quiet: true })
     }
-    catch (ex: any) {
-        console.error(chalk.red(`nunjucks: ERROR: failed to load options YAML file: ${ex.toString()}`))
-        process.exit(1)
+
+    /*  load environment variables from environment files  */
+    if (argv.env.length > 0) {
+        for (const env of argv.env) {
+            if (!fs.existsSync(env)) {
+                console.error(chalk.red(`nunjucks: ERROR: environment file not found: "${env}"`))
+                process.exit(1)
+            }
+        }
+        dotenvx.config({ path: argv.env, quiet: true })
     }
-}
-if (argv.option.length > 0)
-    options = Object.assign(options, argv.option)
-options = {
-    autoescape:       false,
-    throwOnUndefined: false,
-    trimBlocks:       true,
-    lstripBlocks:     true,
-    watch:            false,
-    noCache:          true,
-    ...options
-}
 
-/*  configure environment  */
-const env = nunjucks.configure(inputFile, options)
+    /*  expose environment variables to template  */
+    context.env = process.env
 
-/*  load external plugin modules  */
-for (const plugin of argv.plugin) {
-    let modpath: string | null = path.resolve(plugin)
-    if (!fs.existsSync(modpath)) {
+    /*  add context defines  */
+    argv.define.forEach((define: string) => {
+        const match = define.match(/^([^=]+)(?:=(.*))?$/)
+        if (!match)
+            return
+        let [ , key, val ]: (string | undefined)[] = match
+        if (!key)
+            return
+        if (val === undefined)
+            val = "true"
+        context[key] = val
+    })
+
+    /*  determine Nunjucks options  */
+    let options: OptionsType = {}
+    if (argv.config) {
         try {
-            const require = createRequire(import.meta.url)
-            modpath = require.resolve(plugin)
+            options = jsYAML.load(fs.readFileSync(argv.config, { encoding: "utf8" })) as OptionsType
         }
-        catch (_ex) {
-            modpath = null
+        catch (ex: any) {
+            console.error(chalk.red(`nunjucks: ERROR: failed to load options YAML file: ${ex.toString()}`))
+            process.exit(1)
         }
     }
-    if (modpath === null) {
-        console.error(chalk.red(`nunjucks: ERROR: failed to find plugin module: ${plugin}`))
-        process.exit(1)
+    if (argv.option.length > 0)
+        options = Object.assign(options, argv.option)
+    options = {
+        autoescape:       false,
+        throwOnUndefined: false,
+        trimBlocks:       true,
+        lstripBlocks:     true,
+        watch:            false,
+        noCache:          true,
+        ...options
     }
 
-    /*  dynamically import the module  */
-    let mod: any
+    /*  configure environment  */
+    const env = nunjucks.configure(inputFile, options)
+
+    /*  load external plugin modules  */
+    for (const plugin of argv.plugin) {
+        let modpath: string | null = path.resolve(plugin)
+        if (!fs.existsSync(modpath)) {
+            try {
+                const require = createRequire(import.meta.url)
+                modpath = require.resolve(plugin)
+            }
+            catch (_ex) {
+                modpath = null
+            }
+        }
+        if (modpath === null) {
+            console.error(chalk.red(`nunjucks: ERROR: failed to find plugin module: ${plugin}`))
+            process.exit(1)
+        }
+
+        /*  dynamically import the module  */
+        let mod: any
+        try {
+            mod = await import(modpath)
+
+            /*  handle both default and named exports  */
+            mod = mod.default ?? mod
+        }
+        catch (ex: any) {
+            console.error(chalk.red(`nunjucks: ERROR: failed to load plugin module: ${ex.toString()}`))
+            process.exit(1)
+        }
+        if (!(mod !== null && typeof mod === "function")) {
+            console.error(chalk.red(`nunjucks: ERROR: failed to call plugin file: "${modpath}"`))
+            process.exit(1)
+        }
+        mod(env)
+    }
+
+    /*  render Nunjucks template  */
+    let output: string
     try {
-        mod = await import(modpath)
-
-        /*  handle both default and named exports  */
-        mod = mod.default ?? mod
+        output = env.renderString(input, context)
     }
     catch (ex: any) {
-        console.error(chalk.red(`nunjucks: ERROR: failed to load plugin module: ${ex.toString()}`))
+        console.error(chalk.red(`nunjucks: ERROR: failed to render template: ${ex.toString()}`))
         process.exit(1)
     }
-    if (!(mod !== null && typeof mod === "function")) {
-        console.error(chalk.red(`nunjucks: ERROR: failed to call plugin file: "${modpath}"`))
-        process.exit(1)
-    }
-    mod(env)
-}
 
-/*  render Nunjucks template  */
-let output: string
-try {
-    output = env.renderString(input, context)
-}
-catch (ex: any) {
-    console.error(chalk.red(`nunjucks: ERROR: failed to render template: ${ex.toString()}`))
-    process.exit(1)
-}
+    /*  write output  */
+    if (argv.output === "-")
+        process.stdout.write(output)
+    else
+        fs.writeFileSync(argv.output, output, { encoding: "utf8" })
 
-/*  write output  */
-if (argv.output === "-")
-    process.stdout.write(output)
-else
-    fs.writeFileSync(argv.output, output, { encoding: "utf8" })
-
-/*  die gracefully  */
-process.exit(0)
+    /*  die gracefully  */
+    process.exit(0)
+})().catch((err: any) => {
+    console.error(chalk.red(`nunjucks: ERROR: ${err.toString()}`))
+})
 
