@@ -31,9 +31,7 @@ WORKDIR     /app
 ENV         HOME=/app
 
 #   install tool
-RUN         npm install -g \
-                @rse/nunjucks-cli \
-                @rse/nunjucks-addons
+RUN         npm install -g @rse/nunjucks-cli
 
 #   cleanup Alpine
 RUN         rm -rf /var/cache/apk/*
