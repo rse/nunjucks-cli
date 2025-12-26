@@ -2,7 +2,7 @@
 ChangeLog
 =========
 
-2.0.1 (2025-12-26)
+2.1.0 (2025-12-26)
 ------------------
 
 - REFACTOR: change option -e/--extension to option -p/--plugin
