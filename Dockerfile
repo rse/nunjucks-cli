@@ -3,7 +3,7 @@
 ##
 
 #   build arguments (early)
-ARG         IMAGE_PREFIX=engelschall/
+ARG         IMAGE_PREFIX=ghcr.io/rse/
 ARG         IMAGE_NAME=nunjucks-cli
 ARG         IMAGE_VERSION=2.1.0
 ARG         IMAGE_RELEASE=20251226
@@ -11,6 +11,10 @@ ARG         IMAGE_ALIAS=latest
 
 #   derive image from a certain base image
 FROM        node:24-alpine3.23
+
+#   link to Github repository
+LABEL       org.opencontainers.image.source=https://github.com/rse/nunjucks-cli
+LABEL       org.opencontainers.image.description="Nunjucks Template Rendering Command-Line Interface"
 
 #   add additional build tools
 RUN         apk update && \

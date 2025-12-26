@@ -53,7 +53,7 @@ least as long as you are working with stdin/stdout or perform the
 corresponding bind-mounts):
 
 ```sh
-$ docker run -i --rm engelschall/nunjucks-cli [...] -
+$ docker run -i --rm ghcr.io/rse/nunjucks-cli [...] -
 ```
 
 Command-Line Interface (CLI)
