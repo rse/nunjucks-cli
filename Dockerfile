@@ -3,7 +3,7 @@
 ##
 
 #   build arguments (early)
-ARG         IMAGE_PREFIX=docker.io/engelschall/
+ARG         IMAGE_PREFIX=engelschall/
 ARG         IMAGE_NAME=nunjucks-cli
 ARG         IMAGE_VERSION=2.1.0
 ARG         IMAGE_RELEASE=20251226
@@ -28,8 +28,8 @@ ENV         HOME=/app
 
 #   install tool
 RUN         npm install -g \
-                @rse/nunjucks-cli@1.5.2 \
-                @rse/nunjucks-addons@1.0.8
+                @rse/nunjucks-cli \
+                @rse/nunjucks-addons
 
 #   cleanup Alpine
 RUN         rm -rf /var/cache/apk/*
