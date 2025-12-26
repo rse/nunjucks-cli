@@ -1,66 +1,66 @@
 {
-    "name":                       "@rse/nunjucks-cli",
-    "publishConfig":              { "access": "public" },
-    "version":                    "2.1.0",
-    "stdver":                     "2.1.0-GA",
-    "description":                "Nunjucks Template Rendering Command-Line Interface",
+    "name":                             "@rse/nunjucks-cli",
+    "publishConfig":                    { "access": "public" },
+    "version":                          "2.1.0",
+    "stdver":                           "2.2.0-GA",
+    "description":                      "Nunjucks Template Rendering Command-Line Interface",
     "author": {
-        "name":                   "Dr. Ralf S. Engelschall",
-        "email":                  "rse@engelschall.com",
-        "url":                    "http://engelschall.com"
+        "name":                         "Dr. Ralf S. Engelschall",
+        "email":                        "rse@engelschall.com",
+        "url":                          "http://engelschall.com"
     },
-    "license":                    "MIT",
+    "license":                          "MIT",
     "repository": {
-        "type":                   "git",
-        "url":                    "git+https://github.com/rse/nunjucks-cli.git"
+        "type":                         "git",
+        "url":                          "git+https://github.com/rse/nunjucks-cli.git"
     },
     "bugs": {
-        "url":                    "http://github.com/rse/nunjucks-cli/issues"
+        "url":                          "http://github.com/rse/nunjucks-cli/issues"
     },
     "bin": {
-        "nunjucks":               "dst-stage1/nunjucks.js"
+        "nunjucks":                     "dst-stage1/nunjucks.js"
     },
-    "man":                        "dst-stage1/nunjucks.1",
-    "type":                       "module",
+    "man":                              "dst-stage1/nunjucks.1",
+    "type":                             "module",
     "engines": {
-        "node":                   ">=22.18.0"
+        "node":                         ">=22.18.0"
     },
     "dependencies": {
-        "nunjucks":               "3.2.4",
-        "chalk":                  "5.6.2",
-        "commander":              "14.0.2",
-        "js-yaml":                "4.1.1",
-        "deepmerge":              "4.3.1",
-        "@dotenvx/dotenvx":       "1.51.2",
-        "find-up":                "8.0.0"
+        "nunjucks":                     "3.2.4",
+        "chalk":                        "5.6.2",
+        "commander":                    "14.0.2",
+        "js-yaml":                      "4.1.1",
+        "deepmerge":                    "4.3.1",
+        "@dotenvx/dotenvx":             "1.51.2",
+        "find-up":                      "8.0.0"
     },
     "devDependencies": {
-        "eslint":                 "9.39.2",
-        "@eslint/js":             "9.39.2",
-        "neostandard":            "0.12.2",
-        "eslint-plugin-promise":  "7.2.1",
-        "eslint-plugin-import":   "2.32.0",
-        "eslint-plugin-n":        "17.23.1",
-        "globals":                "16.5.0",
-        "remark-cli":             "12.0.1",
-        "remark":                 "15.0.1",
-        "remark-man":             "9.0.0",
-        "typescript":             "5.9.3",
-        "typescript-eslint":      "8.50.1",
-        "@rse/stx":               "1.1.4",
-        "shx":                    "0.4.0",
-        "@yao-pkg/pkg":           "6.11.0",
-        "vite":                   "7.3.0",
-        "@wroud/vite-plugin-tsc": "0.12.2",
+        "eslint":                       "9.39.2",
+        "@eslint/js":                   "9.39.2",
+        "neostandard":                  "0.12.2",
+        "eslint-plugin-promise":        "7.2.1",
+        "eslint-plugin-import":         "2.32.0",
+        "eslint-plugin-n":              "17.23.1",
+        "globals":                      "16.5.0",
+        "remark-cli":                   "12.0.1",
+        "remark":                       "15.0.1",
+        "remark-man":                   "9.0.0",
+        "typescript":                   "5.9.3",
+        "typescript-eslint":            "8.50.1",
+        "@rse/stx":                     "1.1.4",
+        "shx":                          "0.4.0",
+        "@yao-pkg/pkg":                 "6.11.0",
+        "vite":                         "7.3.0",
+        "@wroud/vite-plugin-tsc":       "0.12.2",
         "rollup-plugin-node-externals": "8.1.2",
-        "terser":                 "5.44.1",
+        "terser":                       "5.44.1",
 
-        "@types/node":            "25.0.3",
-        "@types/js-yaml":         "4.0.9",
-        "@types/nunjucks":        "3.2.6"
+        "@types/node":                  "25.0.3",
+        "@types/js-yaml":               "4.0.9",
+        "@types/nunjucks":              "3.2.6"
     },
     "scripts": {
-        "start":                  "stx -v4 -c stx.conf",
-        "test":                   "npm start test"
+        "start":                        "stx -v4 -c stx.conf",
+        "test":                         "npm start test"
     }
 }
