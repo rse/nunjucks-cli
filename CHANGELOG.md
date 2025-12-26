@@ -6,6 +6,8 @@ ChangeLog
 ------------------
 
 - IMPROVEMENT: finally fix SEA packaging
+- IMPROVEMENT: provide Docker container publishing
+- CLEANUP: cleanup distribution archive packaging
 
 2.1.0 (2025-12-26)
 ------------------
