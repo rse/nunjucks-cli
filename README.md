@@ -56,6 +56,8 @@ corresponding bind-mounts):
 $ docker run -i --rm ghcr.io/rse/nunjucks-cli [...] -
 ```
 
+Finally, there are [pre-build binaries](https://github.com/rse/nunjucks-cli/releases) available, too.
+
 Command-Line Interface (CLI)
 ----------------------------
 
