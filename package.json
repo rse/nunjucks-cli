@@ -18,9 +18,9 @@
         "url":                    "http://github.com/rse/nunjucks-cli/issues"
     },
     "bin": {
-        "nunjucks":               "nunjucks.js"
+        "nunjucks":               "dst-stage1/nunjucks.js"
     },
-    "man":                        "nunjucks.1",
+    "man":                        "dst-stage1/nunjucks.1",
     "type":                       "module",
     "engines": {
         "node":                   ">=22.18.0"
@@ -50,11 +50,14 @@
         "@rse/stx":               "1.1.4",
         "shx":                    "0.4.0",
         "@yao-pkg/pkg":           "6.11.0",
+        "vite":                   "7.3.0",
+        "@wroud/vite-plugin-tsc": "0.12.2",
+        "rollup-plugin-node-externals": "8.1.2",
+        "terser":                 "5.44.1",
 
         "@types/node":            "25.0.3",
         "@types/js-yaml":         "4.0.9",
-        "@types/nunjucks":        "3.2.6",
-        "@types/find-up":         "4.0.2"
+        "@types/nunjucks":        "3.2.6"
     },
     "scripts": {
         "start":                  "stx -v4 -c stx.conf",

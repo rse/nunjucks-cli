@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
         "target":                           "ES2024",
-        "module":                           "node20",
+        "module":                           "nodenext",
         "lib":                              [ "ES2024" ],
-        "moduleResolution":                 "node16",
+        "moduleResolution":                 "nodenext",
         "resolveJsonModule":                true,
         "declaration":                      false,
         "allowSyntheticDefaultImports":     true,
@@ -11,7 +11,7 @@
         "forceConsistentCasingInFileNames": true,
         "strict":                           true,
         "skipLibCheck":                     true,
-        "outDir":                           ".",
+        "outDir":                           "dst-stage1",
         "types":                            [ "node" ]
     },
     "include": [
