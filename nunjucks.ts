@@ -116,7 +116,7 @@ if (inputFile === "-") {
 }
 else {
     if (!fs.existsSync(inputFile)) {
-        console.error(chalk.red(`nunjucks: ERROR: failed to find input file: ${inputFile}`))
+        console.error(chalk.red(`nunjucks: ERROR: failed to find input file: "${inputFile}"`))
         process.exit(1)
     }
     input = fs.readFileSync(inputFile, { encoding: "utf8" })
@@ -206,7 +206,7 @@ for (const extension of argv.extension) {
         process.exit(1)
     }
     if (!(mod !== null && typeof mod === "function")) {
-        console.error(chalk.red(`nunjucks: ERROR: failed to call extension file: ${modpath}`))
+        console.error(chalk.red(`nunjucks: ERROR: failed to call extension file: "${modpath}"`))
         process.exit(1)
     }
     mod(env)
