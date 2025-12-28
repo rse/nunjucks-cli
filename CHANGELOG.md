@@ -2,6 +2,12 @@
 ChangeLog
 =========
 
+2.2.3 (2025-12-28)
+------------------
+
+- CLEANUP: always build before publish
+- IMPROVEWENT: re-roll Docker container to get the "keys" filter from the addons
+
 2.2.2 (2025-12-28)
 ------------------
 
