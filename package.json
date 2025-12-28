@@ -60,6 +60,7 @@
         "@types/nunjucks":              "3.2.6"
     },
     "scripts": {
+        "prepublishOnly":               "npm start build",
         "start":                        "stx -v4 -c stx.conf",
         "test":                         "npm start test"
     }
