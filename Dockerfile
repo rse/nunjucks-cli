@@ -5,8 +5,8 @@
 #   build arguments (early)
 ARG         IMAGE_PREFIX=ghcr.io/rse/
 ARG         IMAGE_NAME=nunjucks-cli
-ARG         IMAGE_VERSION=2.2.1
-ARG         IMAGE_RELEASE=20251226
+ARG         IMAGE_VERSION=2.2.3
+ARG         IMAGE_RELEASE=20251228
 ARG         IMAGE_ALIAS=latest
 
 #   derive image from a certain base image
