@@ -227,7 +227,7 @@ type CLIOptions = {
     const { path: pathOption, ...nunjucksOptions } = options
     let searchPath: string | string[]
     if (pathOption !== undefined)
-        searchPath = typeof pathOption === "string" ? pathOption.split(",") : pathOption
+        searchPath = typeof pathOption === "string" ? pathOption.split(path.delimiter) : pathOption
     else if (inputFile === "<stdin>")
         searchPath = "."
     else
