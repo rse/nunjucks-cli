@@ -237,11 +237,16 @@ type CLIOptions = {
     const env = nunjucks.configure(searchPath, nunjucksOptions)
 
     /*  load external plugin modules  */
+    const require = createRequire(import.meta.url)
     for (const plugin of argv.plugin) {
-        let modpath: string | null = path.resolve(plugin)
-        if (!fs.existsSync(modpath)) {
+        let modpath: string | null
+        if (/^(\.\.?\/|\/)/.test(plugin)) {
+            modpath = path.resolve(plugin)
+            if (!fs.existsSync(modpath))
+                modpath = null
+        }
+        else {
             try {
-                const require = createRequire(import.meta.url)
                 modpath = require.resolve(plugin)
             }
             catch (_ex) {
