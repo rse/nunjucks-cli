@@ -201,12 +201,15 @@ const ContextSchema = v.pipe(PlainObject, v.record(v.string(), v.any()))
 
     /*  coerce string scalar to native type  */
     const coerceScalar = (val: string): any => {
-        if      (val === "true")           return true
-        else if (val === "false")          return false
-        else if (val === "null")           return null
-        else if (/^-?\d+$/.test(val))      return parseInt(val, 10)
-        else if (/^-?\d*\.\d+$/.test(val)) return parseFloat(val)
-        else                               return val
+        if      (val === "true")  return true
+        else if (val === "false") return false
+        else if (val === "null")  return null
+        else {
+            const n = Number(val)
+            if (val.trim() !== "" && Number.isFinite(n))
+                return n
+            return val
+        }
     }
 
     /*  add context defines  */
