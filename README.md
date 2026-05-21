@@ -116,7 +116,7 @@ Hello, world!
 License
 -------
 
-Copyright &copy; 2019-2025 Dr. Ralf S. Engelschall (http://engelschall.com/)
+Copyright &copy; 2019-2026 Dr. Ralf S. Engelschall (http://engelschall.com/)
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
