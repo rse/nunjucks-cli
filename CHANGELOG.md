@@ -22,6 +22,7 @@ ChangeLog
 - CLEANUP: remove unnecessary type annotation
 - CLEANUP: ignore .ase directory
 - CLEANUP: update year in all copyright messages
+- UPDATE upgrade NPM dependencies
 
 2.2.3 (2025-12-28)
 ------------------
