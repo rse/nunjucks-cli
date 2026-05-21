@@ -2,7 +2,7 @@
     "name":                             "@rse/nunjucks-cli",
     "publishConfig":                    { "access": "public" },
     "version":                          "2.2.3",
-    "stdver":                           "2.2.3-GA",
+    "stdver":                           "2.3.0-GA",
     "description":                      "Nunjucks Template Rendering Command-Line Interface",
     "author": {
         "name":                         "Dr. Ralf S. Engelschall",
@@ -59,7 +59,7 @@
         "@types/js-yaml":               "4.0.9",
         "@types/nunjucks":              "3.2.6"
     },
-    "upd": [ "!eslint", "!@eslint/js" ],
+    "upd":                              [ "!eslint", "!@eslint/js" ],
     "scripts": {
         "prepublishOnly":               "npm start build",
         "start":                        "stx -v4 -c stx.conf",
