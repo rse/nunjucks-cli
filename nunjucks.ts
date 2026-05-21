@@ -289,5 +289,6 @@ type CLIOptions = {
     process.exit(0)
 })().catch((err: any) => {
     console.error(chalk.red(`nunjucks: ERROR: ${err.toString()}`))
+    process.exit(1)
 })
 
