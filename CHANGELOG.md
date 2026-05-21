@@ -5,9 +5,23 @@ ChangeLog
 2.3.0 (2026-05-21)
 ------------------
 
-- IMPROVEMENT: support "-C path=[...]" for setting the include search path of Nunjucks
-- BUGFIX: fix the include search path of Nunjucks
+- FEATURE: support async filters in Nunjucks rendering
+- FEATURE: allow define files to also set environment variables
+- IMPROVEMENT: support "-C path=[...]" for setting the Nunjucks include search path
+- IMPROVEMENT: coerce booleans and numbers in -D define option for true typed values
+- IMPROVEMENT: validate YAML define files strictly
+- IMPROVEMENT: require relative/absolute paths for local plugins to distinguish from NPM packages
+- IMPROVEMENT: exit with non-zero exit code on exception
+- IMPROVEMENT: improve portability
+- BUGFIX: fix the Nunjucks include search path
+- BUGFIX: fix readSync EOF handling on stdin
+- BUGFIX: wait for stdout drain before process exit
+- REFACTOR: factor out duplicate code
 - CLEANUP: cleanup build infrastructure
+- CLEANUP: simplify type/value checking
+- CLEANUP: remove unnecessary type annotation
+- CLEANUP: ignore .ase directory
+- CLEANUP: update year in all copyright messages
 
 2.2.3 (2025-12-28)
 ------------------
