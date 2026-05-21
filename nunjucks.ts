@@ -199,15 +199,23 @@ const ContextSchema = v.pipe(PlainObject, v.record(v.string(), v.any()))
         return [ key, m[2] ?? "true" ]
     }
 
+    /*  coerce string scalar to native type  */
+    const coerceScalar = (val: string): any => {
+        if      (val === "true")           return true
+        else if (val === "false")          return false
+        else if (val === "null")           return null
+        else if (/^-?\d+$/.test(val))      return parseInt(val, 10)
+        else if (/^-?\d*\.\d+$/.test(val)) return parseFloat(val)
+        else                               return val
+    }
+
     /*  add context defines  */
     for (const define of argv.define) {
         const kv = parseKV(define)
         if (kv === null)
             continue
         const [ key, val ] = kv
-        if      (val === "true")  context[key] = true
-        else if (val === "false") context[key] = false
-        else                      context[key] = val
+        context[key] = coerceScalar(val)
     }
 
     /*  determine Nunjucks options  */
@@ -231,9 +239,7 @@ const ContextSchema = v.pipe(PlainObject, v.record(v.string(), v.any()))
             continue
         const [ key, val ] = kv
         const opts = options as Record<string, any>
-        if      (val === "true")  opts[key] = true
-        else if (val === "false") opts[key] = false
-        else                      opts[key] = val
+        opts[key] = coerceScalar(val)
     }
     options = {
         autoescape:       false,
