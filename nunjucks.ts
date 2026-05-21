@@ -61,7 +61,7 @@ const PlainObject = v.custom<Record<string, unknown>>(
     (x) => typeof x === "object" && x !== null && !Array.isArray(x),
     "Expected YAML mapping"
 )
-const OptionsSchema = v.pipe(PlainObject, v.partial(v.object({
+const OptionsSchema = v.pipe(PlainObject, v.partial(v.strictObject({
     autoescape:       v.boolean(),
     throwOnUndefined: v.boolean(),
     trimBlocks:       v.boolean(),
@@ -226,13 +226,10 @@ const ContextSchema = v.pipe(PlainObject, v.record(v.string(), v.any()))
     if (argv.config) {
         try {
             const raw = jsYAML.load(fs.readFileSync(argv.config, { encoding: "utf8" })) ?? {}
-            options = v.parse(OptionsSchema, raw)
+            options = raw as OptionsType
         }
         catch (ex: any) {
-            const msg = ex instanceof v.ValiError
-                ? `invalid options YAML file "${argv.config}": ${ex.message}`
-                : `failed to load options YAML file: ${ex.toString()}`
-            console.error(chalk.red(`nunjucks: ERROR: ${msg}`))
+            console.error(chalk.red(`nunjucks: ERROR: failed to load options YAML file: ${ex.toString()}`))
             process.exit(1)
         }
     }
@@ -243,6 +240,16 @@ const ContextSchema = v.pipe(PlainObject, v.record(v.string(), v.any()))
         const [ key, val ] = kv
         const opts = options as Record<string, any>
         opts[key] = coerceScalar(val)
+    }
+    try {
+        options = v.parse(OptionsSchema, options)
+    }
+    catch (ex: any) {
+        const msg = ex instanceof v.ValiError
+            ? `invalid options: ${ex.message}`
+            : `failed to validate options: ${ex.toString()}`
+        console.error(chalk.red(`nunjucks: ERROR: ${msg}`))
+        process.exit(1)
     }
     options = {
         autoescape:       false,
