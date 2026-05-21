@@ -301,7 +301,7 @@ const ContextSchema = v.pipe(PlainObject, v.record(v.string(), v.any()))
             console.error(chalk.red(`nunjucks: ERROR: failed to load plugin module: ${ex.toString()}`))
             process.exit(1)
         }
-        if (!(mod !== null && typeof mod === "function")) {
+        if (typeof mod !== "function") {
             console.error(chalk.red(`nunjucks: ERROR: failed to call plugin file: "${modpath}"`))
             process.exit(1)
         }
