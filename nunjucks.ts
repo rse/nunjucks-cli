@@ -283,8 +283,10 @@ type CLIOptions = {
     }
 
     /*  write output  */
-    if (argv.output === "-")
-        process.stdout.write(output)
+    if (argv.output === "-") {
+        if (!process.stdout.write(output))
+            await new Promise<void>((resolve) => process.stdout.once("drain", resolve))
+    }
     else
         fs.writeFileSync(argv.output, output, { encoding: "utf8" })
 
