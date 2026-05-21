@@ -167,18 +167,24 @@ type CLIOptions = {
     /*  expose environment variables to template  */
     context.env = process.env
 
-    /*  add context defines  */
-    argv.define.forEach((define: string) => {
-        const match = define.match(/^([^=]+)(?:=(.*))?$/)
-        if (!match)
-            return
-        let [ , key, val ]: (string | undefined)[] = match
+    /*  parse "key=value" pair with default "true"  */
+    const parseKV = (s: string): [ string, string ] | null => {
+        const m = s.match(/^([^=]+)(?:=(.*))?$/)
+        if (!m)
+            return null
+        const key = m[1]
         if (!key)
-            return
-        if (val === undefined)
-            val = "true"
-        context[key] = val
-    })
+            return null
+        return [ key, m[2] ?? "true" ]
+    }
+
+    /*  add context defines  */
+    for (const define of argv.define) {
+        const kv = parseKV(define)
+        if (kv === null)
+            continue
+        context[kv[0]] = kv[1]
+    }
 
     /*  determine Nunjucks options  */
     let options: OptionsType = {}
@@ -191,23 +197,16 @@ type CLIOptions = {
             process.exit(1)
         }
     }
-    argv.option.forEach((option: string) => {
-        const match = option.match(/^([^=]+)(?:=(.*))?$/)
-        if (!match)
-            return
-        let [ , key, val ]: (string | undefined)[] = match
-        if (!key)
-            return
-        if (val === undefined)
-            val = "true"
+    for (const option of argv.option) {
+        const kv = parseKV(option)
+        if (kv === null)
+            continue
+        const [ key, val ] = kv
         const opts = options as Record<string, any>
-        if (val === "true")
-            opts[key] = true
-        else if (val === "false")
-            opts[key] = false
-        else
-            opts[key] = val
-    })
+        if      (val === "true")  opts[key] = true
+        else if (val === "false") opts[key] = false
+        else                      opts[key] = val
+    }
     options = {
         autoescape:       false,
         throwOnUndefined: false,
