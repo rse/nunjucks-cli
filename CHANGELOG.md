@@ -2,7 +2,7 @@
 ChangeLog
 =========
 
-2.2.4 (2026-05-21)
+2.3.0 (2026-05-21)
 ------------------
 
 - IMPROVEMENT: support "-C path=[...]" for setting the include search path of Nunjucks
