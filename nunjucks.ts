@@ -117,9 +117,8 @@ type CLIOptions = {
                 bytesRead = fs.readSync(process.stdin.fd, buf, 0, BUFSIZE, null)
             }
             catch (ex: any) {
-                if      (ex.code === "EAGAIN") continue
-                else if (ex.code === "EOF")    break
-                else                           throw ex
+                if (ex.code === "EAGAIN") continue
+                else                      throw ex
             }
             if (bytesRead === 0)
                 break
