@@ -165,7 +165,7 @@ type CLIOptions = {
     }
 
     /*  expose environment variables to template  */
-    context.env = process.env
+    context.env = { ...process.env, ...(context.env ?? {}) }
 
     /*  parse "key=value" pair with default "true"  */
     const parseKV = (s: string): [ string, string ] | null => {
