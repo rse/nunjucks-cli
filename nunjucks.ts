@@ -159,9 +159,9 @@ const ContextSchema = v.pipe(PlainObject, v.record(v.string(), v.any()))
             context = deepmerge(context, parsed)
         }
         catch (ex: any) {
-            const msg = ex instanceof v.ValiError
-                ? `invalid context YAML file "${define}": ${ex.message}`
-                : `failed to load context YAML file: ${ex.toString()}`
+            const msg = ex instanceof v.ValiError ?
+                `invalid context YAML file "${define}": ${ex.message}` :
+                `failed to load context YAML file: ${ex.toString()}`
             console.error(chalk.red(`nunjucks: ERROR: ${msg}`))
             process.exit(1)
         }
@@ -245,9 +245,9 @@ const ContextSchema = v.pipe(PlainObject, v.record(v.string(), v.any()))
         options = v.parse(OptionsSchema, options)
     }
     catch (ex: any) {
-        const msg = ex instanceof v.ValiError
-            ? `invalid options: ${ex.message}`
-            : `failed to validate options: ${ex.toString()}`
+        const msg = ex instanceof v.ValiError ?
+            `invalid options: ${ex.message}` :
+            `failed to validate options: ${ex.toString()}`
         console.error(chalk.red(`nunjucks: ERROR: ${msg}`))
         process.exit(1)
     }
