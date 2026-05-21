@@ -18,6 +18,7 @@ import nunjucks          from "nunjucks"
 import deepmerge         from "deepmerge"
 import dotenvx           from "@dotenvx/dotenvx"
 import * as findup       from "find-up"
+import * as v            from "valibot"
 
 /*  internal requirements  */
 import pkg               from "./package.json" with { type: "json" }
@@ -54,6 +55,22 @@ type CLIOptions = {
     output:    string
     _:         string[]
 }
+
+/*  runtime schemas for YAML-loaded shapes  */
+const PlainObject = v.custom<Record<string, unknown>>(
+    (x) => typeof x === "object" && x !== null && !Array.isArray(x),
+    "Expected YAML mapping"
+)
+const OptionsSchema = v.pipe(PlainObject, v.partial(v.object({
+    autoescape:       v.boolean(),
+    throwOnUndefined: v.boolean(),
+    trimBlocks:       v.boolean(),
+    lstripBlocks:     v.boolean(),
+    watch:            v.boolean(),
+    noCache:          v.boolean(),
+    path:             v.union([ v.string(), v.array(v.string()) ])
+})))
+const ContextSchema = v.pipe(PlainObject, v.record(v.string(), v.any()))
 
 /*  establish asynchronous environment  */
 ;(async () => {
@@ -137,10 +154,15 @@ type CLIOptions = {
     let context: ContextType = {}
     for (const define of argv.defines) {
         try {
-            context = deepmerge(context, jsYAML.load(fs.readFileSync(define, { encoding: "utf8" })) as ContextType)
+            const raw = jsYAML.load(fs.readFileSync(define, { encoding: "utf8" })) ?? {}
+            const parsed = v.parse(ContextSchema, raw)
+            context = deepmerge(context, parsed)
         }
         catch (ex: any) {
-            console.error(chalk.red(`nunjucks: ERROR: failed to load context YAML file: ${ex.toString()}`))
+            const msg = ex instanceof v.ValiError
+                ? `invalid context YAML file "${define}": ${ex.message}`
+                : `failed to load context YAML file: ${ex.toString()}`
+            console.error(chalk.red(`nunjucks: ERROR: ${msg}`))
             process.exit(1)
         }
     }
@@ -192,10 +214,14 @@ type CLIOptions = {
     let options: OptionsType = {}
     if (argv.config) {
         try {
-            options = jsYAML.load(fs.readFileSync(argv.config, { encoding: "utf8" })) as OptionsType
+            const raw = jsYAML.load(fs.readFileSync(argv.config, { encoding: "utf8" })) ?? {}
+            options = v.parse(OptionsSchema, raw)
         }
         catch (ex: any) {
-            console.error(chalk.red(`nunjucks: ERROR: failed to load options YAML file: ${ex.toString()}`))
+            const msg = ex instanceof v.ValiError
+                ? `invalid options YAML file "${argv.config}": ${ex.message}`
+                : `failed to load options YAML file: ${ex.toString()}`
+            console.error(chalk.red(`nunjucks: ERROR: ${msg}`))
             process.exit(1)
         }
     }
