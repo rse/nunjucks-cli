@@ -39,6 +39,7 @@ type OptionsType = {
     lstripBlocks?:     boolean
     watch?:            boolean
     noCache?:          boolean
+    path?:             string | string[]
 }
 type CLIOptions = {
     help:      boolean
@@ -190,8 +191,23 @@ type CLIOptions = {
             process.exit(1)
         }
     }
-    if (argv.option.length > 0)
-        options = Object.assign(options, argv.option)
+    argv.option.forEach((option: string) => {
+        const match = option.match(/^([^=]+)(?:=(.*))?$/)
+        if (!match)
+            return
+        let [ , key, val ]: (string | undefined)[] = match
+        if (!key)
+            return
+        if (val === undefined)
+            val = "true"
+        const opts = options as Record<string, any>
+        if (val === "true")
+            opts[key] = true
+        else if (val === "false")
+            opts[key] = false
+        else
+            opts[key] = val
+    })
     options = {
         autoescape:       false,
         throwOnUndefined: false,
@@ -202,8 +218,21 @@ type CLIOptions = {
         ...options
     }
 
+    /*  determine template search path:
+        use explicit override via -C path=… if given,
+        else the directory of the input file,
+        else (for stdin) the current working directory  */
+    const { path: pathOption, ...nunjucksOptions } = options
+    let searchPath: string | string[]
+    if (pathOption !== undefined)
+        searchPath = typeof pathOption === "string" ? pathOption.split(",") : pathOption
+    else if (inputFile === "<stdin>")
+        searchPath = "."
+    else
+        searchPath = path.dirname(inputFile)
+
     /*  configure environment  */
-    const env = nunjucks.configure(inputFile, options)
+    const env = nunjucks.configure(searchPath, nunjucksOptions)
 
     /*  load external plugin modules  */
     for (const plugin of argv.plugin) {

@@ -5,6 +5,8 @@ ChangeLog
 2.2.4 (2026-05-21)
 ------------------
 
+- IMPROVEMENT: support "-C path=[...]" for setting the include search path of Nunjucks
+- BUGFIX: fix the include search path of Nunjucks
 - CLEANUP: cleanup build infrastructure
 
 2.2.3 (2025-12-28)
