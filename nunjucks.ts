@@ -275,7 +275,12 @@ type CLIOptions = {
     /*  render Nunjucks template  */
     let output: string
     try {
-        output = env.renderString(input, context)
+        output = await new Promise<string>((resolve, reject) => {
+            env.renderString(input, context, (err, res) => {
+                if (err) reject(err)
+                else     resolve(res ?? "")
+            })
+        })
     }
     catch (ex: any) {
         console.error(chalk.red(`nunjucks: ERROR: failed to render template: ${ex.toString()}`))
