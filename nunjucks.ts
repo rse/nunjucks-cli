@@ -105,7 +105,7 @@ type CLIOptions = {
         console.error(chalk.red("nunjucks: ERROR: invalid number of arguments (zero or one input file expected)"))
         process.exit(1)
     }
-    let inputFile: string = argv._[0] ?? "-"
+    let inputFile = argv._[0] ?? "-"
     if (inputFile === "-") {
         inputFile = "<stdin>"
         process.stdin.setEncoding("utf-8")
