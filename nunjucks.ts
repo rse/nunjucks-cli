@@ -183,7 +183,10 @@ type CLIOptions = {
         const kv = parseKV(define)
         if (kv === null)
             continue
-        context[kv[0]] = kv[1]
+        const [ key, val ] = kv
+        if      (val === "true")  context[key] = true
+        else if (val === "false") context[key] = false
+        else                      context[key] = val
     }
 
     /*  determine Nunjucks options  */
